@@ -28,11 +28,9 @@ interface MembersTableProps {
 }
 
 export function MembersTable({ members, className }: MembersTableProps) {
+  const router = useRouter();
   return (
-    <div
-      className={cn("rounded-lg border overflow-hidden", className)}
-      style={{ padding: "10px", margin: "5px" }}
-    >
+    <div className={cn("rounded-lg border overflow-hidden", className)}>
       <Table>
         <TableHeader>
           <TableRow>
@@ -47,16 +45,13 @@ export function MembersTable({ members, className }: MembersTableProps) {
           {members.map((member) => (
             <TableRow
               key={member.id}
+              className="cursor-pointer"
               onClick={() => {
-                const router = useRouter();
-                router.push(`/dashboard/allmembers/member`);
+                router.push(`/dashboard/allmembers/profile`);
               }}
             >
               <TableCell>
-                <div
-                  className="flex items-center gap-3"
-                  style={{ padding: "10px" }}
-                >
+                <div className="flex items-center gap-3 p-1">
                   <Avatar>
                     <AvatarImage
                       src={

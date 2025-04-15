@@ -69,20 +69,18 @@ export function AddMemberDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="sm:max-w-[350px] h-110 p-0 overflow-hidden"
-        style={{ padding: "15px" }}
+        className="sm:max-w-[350px] h-100 p-4 overflow-hidden"
       >
-        <DialogHeader className="p-6 pb-2">
+        <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Add New Member
           </DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4 p-6 pt-2 space-y-3">
+        <div className="flex flex-col space-y-3">
           <div className="space-y-2">
             <Select value={division} onValueChange={setDivision}>
               <SelectTrigger
-                className="flex w-80 h-11"
-                style={{ padding: "5px" }}
+                className="flex w-80 h-11 p-1"
               >
                 <SelectValue placeholder="Select Division" />
               </SelectTrigger>
@@ -98,8 +96,7 @@ export function AddMemberDialog() {
           <div className="space-y-2">
             <Select value={group} onValueChange={setGroup}>
               <SelectTrigger
-                className="flex w-80 h-11"
-                style={{ padding: "5px" }}
+                className="flex w-80 h-11 p-1"
               >
                 <SelectValue placeholder="Select Group" />
               </SelectTrigger>
@@ -118,8 +115,7 @@ export function AddMemberDialog() {
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex w-80 h-11"
-              style={{ padding: "5px" }}
+              className="flex w-80 h-11 p-1"
             />
           </div>
 
@@ -130,14 +126,12 @@ export function AddMemberDialog() {
                 placeholder="Random Password"
                 value={generatedPassword}
                 readOnly
-                className="flex w-55 h-11"
-                style={{ padding: "5px" }}
+                className="flex w-55 h-11 p-1"
               />
             </div>
             <Button
               onClick={generateRandomPassword}
-              className="flex rounded-md text-white w-20 h-11 shrink-0 cursor-pointer bg-[#003087] hover:bg-[#002f87a2]"
-              style={{ padding: "5px" }}
+              className="flex rounded-md text-white w-20 h-11 p-1 shrink-0 cursor-pointer bg-[#003087] hover:bg-[#002f87a2]"
             >
               Generate
             </Button>
@@ -149,12 +143,11 @@ export function AddMemberDialog() {
               placeholder="Enter Generated Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="flex w-80 h-11"
-              style={{ padding: "5px" }}
+              className="flex w-80 h-11 p-1"
             />
           </div>
 
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center items-center gap-3">
             <div className="flex gap-3 items-center justify-center">
               <Button
                 variant="outline"
@@ -163,7 +156,7 @@ export function AddMemberDialog() {
                 className="flex h-10 w-35 rounded-md items-center justify-center bg-[#34495E0D] cursor-pointer hover:bg-[#48637e0d]"
                 aria-label="Cancel"
               >
-                <h3 style={{ marginLeft: "5px" }}> Cancel </h3>
+                <h3 className="ml-1"> Cancel </h3>
               </Button>
             </div>
 
@@ -175,7 +168,7 @@ export function AddMemberDialog() {
                 className="flex h-10 w-35 rounded-md items-center justify-center bg-[#003087] cursor-pointer hover:bg-[#002f87a2]"
                 aria-label="Invite"
               >
-                <h3 className="text-[#F8F8F8]" style={{ marginLeft: "5px" }}>
+                <h3 className="text-[#F8F8F8] ml-1">
                   {" "}
                   Invite{" "}
                 </h3>

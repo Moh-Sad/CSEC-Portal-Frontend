@@ -42,7 +42,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "flex gap-8 items-center justify-center px-2 py-5 text-[19px] font-bold whitespace-nowrap transition-colors border-b-2 border-gray-300",
+        "flex gap-8 items-center justify-center p-1 text-[19px] font-bold whitespace-nowrap transition-colors border-b-2 border-gray-300",
         "data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]",
         className
       )}

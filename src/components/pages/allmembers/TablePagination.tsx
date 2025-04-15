@@ -19,9 +19,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import DownArrow from "@/public/img/DownArrow.png";
+import DownArrow from "@/components/icons/images/DownArrow.png";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import Img from "next/image";
 
 interface TablePaginationProps {
@@ -83,10 +83,9 @@ export function TablePagination({
   return (
     <div
       className={cn(
-        "p-4 flex items-center justify-between text-sm text-muted-foreground",
+        "p-3 flex items-center justify-between text-sm text-muted-foreground",
         className
       )}
-      style={{ padding: "10px" }}
     >
       <div className="flex w-full">
         <DropdownMenu>
@@ -101,13 +100,12 @@ export function TablePagination({
               >
                 <div className="flex">
                   <div
-                    className="flex w-auto items-center justify-center"
-                    style={{ padding: "2px" }}
+                    className="flex w-auto items-center justify-center p-0.5"
                   >
                     10
                   </div>
 
-                  <div className="flex items-center" style={{ padding: "4px" }}>
+                  <div className="flex items-center p-1">
                     <Img
                       src={DownArrow}
                       alt="down arrow"

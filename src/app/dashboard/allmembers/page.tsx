@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { MembersTable, type Member } from "@/components/MembersTable";
-import { TableFilter } from "@/components/TableFilter";
-import { TablePagination } from "@/components/TablePagination";
+import { MembersTable, type Member } from "@/components/pages/allmembers/MembersTable";
+import { TableFilter } from "@/components/pages/allmembers/TableFilter";
+import { TablePagination } from "@/components/pages/allmembers/TablePagination";
 
 // Sample data
 const sampleMembers: Member[] = [
@@ -112,23 +112,20 @@ export default function ExampleUsage() {
 
   return (
     <div
-      className="flex flex-col h-full w-270 gap-4 rounded-[8px] border-1 border-gray-300"
-      style={{ padding: "10px", margin: "10px" }}
+      className="flex flex-col h-full w-auto gap-4 rounded-[8px] border-1 border-gray-300"
     >
       <div className="flex">
         {/* Main Content */}
         <div
-          className="flex-1 gap-3 flex flex-col overflow-hidden"
-          style={{ padding: "10px" }}
+          className="flex-1 gap-3 flex flex-col overflow-hidden p-2"
         >
           {/* Main Content Area */}
-          <main className="flex-1 flex flex-col gap-6 overflow-auto p-6">
+          <main className="flex-1 flex flex-col gap-6 overflow-auto">
             {/* Filter */}
             <TableFilter
               onSearch={handleSearch}
               onFilter={handleFilter}
               placeholder="Search members..."
-              className="mb-6"
             />
             <div>
               {/* Table */}

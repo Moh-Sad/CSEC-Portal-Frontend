@@ -4,7 +4,7 @@ export function RequiredInformation() {
       <div className="flex flex-wrap gap-8" style={{marginTop: "10px"}}>
         {/* Left Column */}
         <div className="flex-1 min-w-[250px] flex flex-col gap-4">
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1 my-5">
             <span className="text-sm font-medium text-gray-500">
               First Name
             </span>
@@ -44,7 +44,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 pb-5">
             <span className="text-sm font-medium text-gray-500">
               Department
             </span>
@@ -56,7 +56,7 @@ export function RequiredInformation() {
 
         {/* Right Column */}
         <div className="flex-1 min-w-[250px] flex flex-col gap-4">
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1 my-5">
             <span className="text-sm font-medium text-gray-500">Last Name</span>
             <span className="text-gray-800 font-medium">Assefa</span>
             <div className="w-full border-b border-gray-300"></div>
@@ -99,7 +99,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 pb-5">
             <span className="text-sm font-medium text-gray-500">Mentor</span>
             <span className="text-gray-800 font-medium">Kiya Kebe</span>
           </div>

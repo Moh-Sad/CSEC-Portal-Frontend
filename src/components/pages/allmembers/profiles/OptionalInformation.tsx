@@ -4,7 +4,7 @@ export function OptionalInformation() {
       <div className="flex flex-wrap gap-8" style={{marginTop: "10px"}}>
         {/* Left Column */}
         <div className="flex-1 min-w-[250px] flex flex-col gap-4">
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1 my-5">
             <span className="text-sm font-medium text-gray-500">
               University ID
             </span>
@@ -54,7 +54,7 @@ export function OptionalInformation() {
 
         {/* Right Column */}
         <div className="flex-1 min-w-[250px] flex flex-col gap-4">
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1 my-5">
             <span className="text-sm font-medium text-gray-500">
               Instagram Handle
             </span>

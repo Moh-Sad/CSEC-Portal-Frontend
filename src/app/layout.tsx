@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/utils/theme-provider"
 import "@/app/globals.css"
 
 interface RootLayoutProps {

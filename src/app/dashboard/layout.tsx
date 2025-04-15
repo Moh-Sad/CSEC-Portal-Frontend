@@ -1,8 +1,8 @@
 "use client";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
+import { AppSidebar } from "@/components/layout/Sidebar";
+import Navbar from "@/components/layout/navbar/Navbar";
 
 export default function DashboardLayout({
   children,
@@ -10,20 +10,20 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body>
-        <div className="flex flex-col">
-          <SidebarProvider>
+    <html lang="en" className="h-full">
+      <body className="h-full">
+        <SidebarProvider>
+          <div className="flex flex-row min-h-screen w-full">
             <AppSidebar />
-            <main className="w-full h-full">
-              <div className="flex space-x-6 items-center ">
-                <SidebarTrigger style={{ marginLeft: "10px" }} />
+            <div className="flex flex-col flex-1 overflow-x-hidden">
+              <div className="flex items-center space-x-1">
+                <SidebarTrigger />
                 <Navbar name="Henok" />
               </div>
-              {children}
-            </main>
-          </SidebarProvider>
-        </div>
+              <main className="flex-1">{children}</main>
+            </div>
+          </div>
+        </SidebarProvider>
       </body>
     </html>
   );
