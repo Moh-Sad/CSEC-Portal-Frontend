@@ -1,84 +1,91 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import DivisionCardComponent from "@/components/pages/alldivisions/DivisionCard"
-
-// Division data model
-interface Group {
-  id: number
-  name: string
-  members: number
-}
-
-interface Division {
-  id: number
-  name: string
-  totalMembers: number
-  groups: Group[]
-}
-
-// Sample data
-const divisionsData: Division[] = [
-  {
-    id: 1,
-    name: "Data Science Division",
-    totalMembers: 10,
-    groups: [
-      { id: 1, name: "Group 1", members: 3 },
-      { id: 2, name: "Group 2", members: 2 },
-      { id: 3, name: "Group 3", members: 3 },
-      { id: 4, name: "Group 4", members: 2 },
-    ],
-  },
-  {
-    id: 2,
-    name: "Development Division",
-    totalMembers: 15,
-    groups: [
-      { id: 1, name: "Group 1", members: 4 },
-      { id: 2, name: "Group 2", members: 3 },
-      { id: 3, name: "Group 3", members: 4 },
-      { id: 4, name: "Group 4", members: 4 },
-    ],
-  },
-  {
-    id: 3,
-    name: "CPD Division",
-    totalMembers: 5,
-    groups: [
-      { id: 1, name: "Group 1", members: 1 },
-      { id: 2, name: "Group 2", members: 1 },
-      { id: 3, name: "Group 3", members: 2 },
-      { id: 4, name: "Group 4", members: 1 },
-    ],
-  },
-  {
-    id: 4,
-    name: "Cyber Division",
-    totalMembers: 10,
-    groups: [
-      { id: 1, name: "Group 1", members: 3 },
-      { id: 2, name: "Group 2", members: 2 },
-      { id: 3, name: "Group 3", members: 3 },
-      { id: 4, name: "Group 4", members: 2 },
-    ],
-  },
-]
+import { useState, useEffect } from "react";
+import DivisionCard from "./DivisionCard";
+import api from "@/lib/axios";
+import Cookies from "js-cookie";
 
 export default function DivisionsOverview() {
-  const [searchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [divisions, setDivisions] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredDivisions = divisionsData.filter((division) =>
-    division.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+  useEffect(() => {
+    const fetchDivisions = async () => {
+      try {
+        const token = Cookies.get('accessToken');
+        if (!token) throw new Error('Please login to view divisions');
+
+        const response = await api.get('/division', {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'ngrok-skip-browser-warning': 'true'
+          },
+          withCredentials: false
+        });
+
+        if (response.data?.data) {
+          setDivisions(response.data.data);
+        }
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch divisions");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDivisions();
+  }, []);
+
+  const filteredDivisions = divisions.filter(division =>
+    division.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (isLoading) {
+    return <div className="flex justify-center py-8">Loading divisions...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center py-8">{error}</div>;
+  }
 
   return (
     <div className="space-y-6">
+      <div className="relative w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Search divisions..."
+          className="pl-10 pr-4 py-2 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="absolute left-3 top-2.5">
+          <svg
+            className="w-5 h-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </div>
       <div className="flex flex-wrap gap-4">
         {filteredDivisions.map((division) => (
-          <DivisionCardComponent key={division.id} division={division} className="flex-1 min-w-[calc(50%-1.5rem)]" />
+          <DivisionCard 
+            key={division._id} 
+            division={division} 
+            className="flex-1 min-w-[calc(50%-1.5rem)]" 
+          />
         ))}
       </div>
     </div>
-  )
+  );
 }

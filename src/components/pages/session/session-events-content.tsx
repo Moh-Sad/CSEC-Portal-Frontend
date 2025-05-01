@@ -22,23 +22,23 @@ export default function Dashboard() {
         <div className="flex space-x-2">
           <Button
             variant={view === "list" ? "default" : "outline"}
-            className={view === "list" ? "bg-[#003081]" : ""}
+            className={`h-10 px-4 rounded-[8px] ${view === "list" ? "bg-[#003081]" : ""}`}
             onClick={() => setView("list")}
           >
-            <List className="h-12 w-10  rounded-[8px]" />
+            <List className="h-4 w-4 mr-2" />
             List
           </Button>
           <Button
             variant={view === "table" ? "default" : "outline"}
-            className={view === "table" ? "bg-[#003081]" : ""}
+            className={`h-10 px-4 rounded-[8px] ${view === "table" ? "bg-[#003081]" : ""}`}
             onClick={() => setView("table")}
           >
-            <Table2 className="h-12 w-15 rounded-[8px]" />
+            <Table2 className="h-4 w-4 mr-2" />
             Table
           </Button>
         </div>
         <div className="flex space-x-2">
-          <Button className="bg-[#003081] text-white rounded-[8px] hover:bg-[#002060]" onClick={() => setShowAddForm(true)}>
+          <Button className="bg-[#003081] text-white rounded-[8px] hover:bg-[#002060] h-10 px-6" onClick={() => setShowAddForm(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Create {type === "event" ? "Event" : "Session"}
           </Button>
