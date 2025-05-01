@@ -44,7 +44,7 @@ export default function GroupCard({ division, linkText = "View All" }: GroupCard
     <Card className="border-1 border-gray-300 rounded-[8px] p-3 dark:bg-gray-800 dark:border-gray-700 w-[49%] mb-1">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-xl font-medium">{division.name}</CardTitle>
-        <Link href="/dashboard/attendance/group/members">
+        <Link href="/dashboard/alldivisions/groups/members">
           <Button
             variant="link"
             className="text-sm font-medium text-[#003087] cursor-pointer"

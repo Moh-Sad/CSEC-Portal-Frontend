@@ -1,28 +1,12 @@
 "use client";
-
-import { DivisionHeader } from "@/components/pages/alldivisions/DivisionsHeader";
 import DivisionsOverview from "@/components/pages/alldivisions/DivisionsOverview";
 
-export default function TableUsage() {
-  const handleSearch = (value: string) => {
-    console.log("Searching for:", value);
-  };
-
+export default function DivisionsPage() {
   return (
     <div className="flex flex-col min-w-240 max-w-full mr-5 my-3 py-4 gap-4 rounded-[8px] border-1 border-gray-300">
       <div className="flex">
-        {/* Main Content */}
-        <div className="gap-3 flex flex-col p-2">
-          {/* Main Content Area */}
-          <main className="flex flex-col gap-4">
-            <DivisionHeader
-              onSearch={handleSearch}
-              placeholder="Search members..."
-            />
-            <div className="flex px-4">
-              <DivisionsOverview />
-            </div>
-          </main>
+        <div className="gap-3 flex flex-col p-2 w-full">
+          <DivisionsOverview />
         </div>
       </div>
     </div>
