@@ -28,7 +28,6 @@ export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
 }
 
-// Helper function (place in separate file if reused)
 function isTokenExpired(token: string) {
   try {
     const { exp } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())

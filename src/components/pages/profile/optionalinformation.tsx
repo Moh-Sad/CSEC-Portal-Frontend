@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,26 +12,28 @@ import { CalendarIcon, FileIcon, UploadIcon, X } from "lucide-react"
 
 interface OptionalInformationProps {
   formData: {
-    universityId: string
-    linkedinAccount: string
-    codeforces: string
-    leetcode: string
-    instagramHandle: string
-    optionalDateOfBirth: string
-    joiningDate: string
+    university_id: string
+    linkedin_handle: string
+    codeforce_handle: string
+    leetcode_handle: string
+    instagram_handle: string
+    optional_birth_date: string
+    joining_date: string
     bio: string
     cv: File | null
+    cv_link: string
   }
   handleChange: (field: string, value: string | File | null) => void
+  onCancel: () => void
 }
 
-export default function OptionalInformation({ formData, handleChange }: OptionalInformationProps) {
+export default function OptionalInformation({ formData, handleChange, onCancel }: OptionalInformationProps) {
   const [dateOfBirth, setDateOfBirth] = useState<Date | undefined>(
-    formData.optionalDateOfBirth ? new Date(formData.optionalDateOfBirth) : undefined,
+    formData.optional_birth_date ? new Date(formData.optional_birth_date) : undefined,
   )
 
   const [joiningDate, setJoiningDate] = useState<Date | undefined>(
-    formData.joiningDate ? new Date(formData.joiningDate) : undefined,
+    formData.joining_date ? new Date(formData.joining_date) : undefined,
   )
 
   const [dragActive, setDragActive] = useState(false)
@@ -41,14 +41,14 @@ export default function OptionalInformation({ formData, handleChange }: Optional
   const handleDateOfBirthChange = (date: Date | undefined) => {
     setDateOfBirth(date)
     if (date) {
-      handleChange("optionalDateOfBirth", format(date, "yyyy-MM-dd"))
+      handleChange("optional_birth_date", format(date, "yyyy-MM-dd"))
     }
   }
 
   const handleJoiningDateChange = (date: Date | undefined) => {
     setJoiningDate(date)
     if (date) {
-      handleChange("joiningDate", format(date, "yyyy-MM-dd"))
+      handleChange("joining_date", format(date, "yyyy-MM-dd"))
     }
   }
 
@@ -82,76 +82,77 @@ export default function OptionalInformation({ formData, handleChange }: Optional
 
   const removeFile = () => {
     handleChange("cv", null)
+    handleChange("cv_link", "")
   }
 
   return (
     <div className="p-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="universityId">University ID</Label>
+          <div className="space-y-1">
+            <Label htmlFor="university_id" className="text-gray-500 text-sm">University ID</Label>
             <Input
-              id="universityId"
-              value={formData.universityId}
-              onChange={(e) => handleChange("universityId", e.target.value)}
-              placeholder="University ID"
-              className="border"
+              id="university_id"
+              value={formData.university_id}
+              onChange={(e) => handleChange("university_id", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="linkedinAccount">LinkedIn Account</Label>
+          <div className="space-y-1">
+            <Label htmlFor="linkedin_handle" className="text-gray-500 text-sm">LinkedIn Handle</Label>
             <Input
-              id="linkedinAccount"
-              value={formData.linkedinAccount}
-              onChange={(e) => handleChange("linkedinAccount", e.target.value)}
-              placeholder="LinkedIn Account"
-              className="border"
+              id="linkedin_handle"
+              value={formData.linkedin_handle}
+              onChange={(e) => handleChange("linkedin_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="codeforces">Codeforces Handle</Label>
+          <div className="space-y-1">
+            <Label htmlFor="codeforce_handle" className="text-gray-500 text-sm">Codeforces Handle</Label>
             <Input
-              id="codeforces"
-              value={formData.codeforces}
-              onChange={(e) => handleChange("codeforces", e.target.value)}
-              placeholder="Codeforces Handle"
-              className="border"
+              id="codeforce_handle"
+              value={formData.codeforce_handle}
+              onChange={(e) => handleChange("codeforce_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="leetcode">LeetCode Handle</Label>
+          <div className="space-y-1">
+            <Label htmlFor="leetcode_handle" className="text-gray-500 text-sm">LeetCode Handle</Label>
             <Input
-              id="leetcode"
-              value={formData.leetcode}
-              onChange={(e) => handleChange("leetcode", e.target.value)}
-              placeholder="LeetCode Handle"
-              className="border"
+              id="leetcode_handle"
+              value={formData.leetcode_handle}
+              onChange={(e) => handleChange("leetcode_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
         </div>
 
         <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="instagramHandle">Instagram Handle</Label>
+          <div className="space-y-1">
+            <Label htmlFor="instagram_handle" className="text-gray-500 text-sm">Instagram Handle</Label>
             <Input
-              id="instagramHandle"
-              value={formData.instagramHandle}
-              onChange={(e) => handleChange("instagramHandle", e.target.value)}
-              placeholder="Instagram Handle"
-              className="border"
+              id="instagram_handle"
+              value={formData.instagram_handle}
+              onChange={(e) => handleChange("instagram_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="dateOfBirth">Date of Birth</Label>
+          <div className="space-y-1">
+            <Label htmlFor="optional_birth_date" className="text-gray-500 text-sm">Date of Birth</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button id="dateOfBirth" variant="outline" className="w-full justify-start text-left font-normal border">
+                <Button id="optional_birth_date" variant="outline" className="w-full justify-start text-left font-normal border border-gray-300 rounded-[8px] h-10">
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateOfBirth ? format(dateOfBirth, "PPP") : <span>Date of Birth</span>}
+                  {dateOfBirth ? format(dateOfBirth, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -160,10 +161,10 @@ export default function OptionalInformation({ formData, handleChange }: Optional
             </Popover>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="cv">CV</Label>
+          <div className="space-y-1">
+            <Label htmlFor="cv" className="text-gray-500 text-sm">CV</Label>
             <div
-              className={`border-2 border-dashed rounded-lg p-4 w-full flex flex-col items-center justify-center space-y-2 ${
+              className={`border-2 border-dashed rounded-lg p-4 w-full flex flex-col items-center justify-center space-y-2 h-10 ${
                 dragActive ? "border-primary bg-primary/5" : "border-gray-300"
               }`}
               onDragEnter={handleDrag}
@@ -178,6 +179,19 @@ export default function OptionalInformation({ formData, handleChange }: Optional
                     <div>
                       <p className="text-sm font-medium">{formData.cv.name}</p>
                       <p className="text-xs text-gray-500">{(formData.cv.size / 1024 / 1024).toFixed(2)} MB</p>
+                    </div>
+                  </div>
+                  <Button type="button" variant="ghost" size="sm" onClick={removeFile}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : formData.cv_link ? (
+                <div className="flex items-center justify-between w-full p-2 bg-gray-50 rounded-md">
+                  <div className="flex items-center space-x-2">
+                    <FileIcon className="h-5 w-5 text-blue-500" />
+                    <div>
+                      <p className="text-sm font-medium">Current CV</p>
+                      <p className="text-xs text-gray-500">Previously uploaded</p>
                     </div>
                   </div>
                   <Button type="button" variant="ghost" size="sm" onClick={removeFile}>
@@ -200,7 +214,7 @@ export default function OptionalInformation({ formData, handleChange }: Optional
                     variant="outline"
                     size="sm"
                     onClick={() => document.getElementById("cv-upload")?.click()}
-                    className="border"
+                    className="border border-gray-300 rounded-[8px]"
                   >
                     Browse
                   </Button>
@@ -209,13 +223,13 @@ export default function OptionalInformation({ formData, handleChange }: Optional
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="joiningDate">Joining Date</Label>
+          <div className="space-y-1">
+            <Label htmlFor="joining_date" className="text-gray-500 text-sm">Joining Date</Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button id="joiningDate" variant="outline" className="w-full justify-start text-left font-normal border">
+                <Button id="joining_date" variant="outline" className="w-full justify-start text-left font-normal border border-gray-300 rounded-[8px] h-10">
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {joiningDate ? format(joiningDate, "PPP") : <span>Joining Date</span>}
+                  {joiningDate ? format(joiningDate, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -224,17 +238,33 @@ export default function OptionalInformation({ formData, handleChange }: Optional
             </Popover>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="bio">Bio</Label>
+          <div className="space-y-1">
+            <Label htmlFor="bio" className="text-gray-500 text-sm">Bio</Label>
             <Textarea
               id="bio"
               value={formData.bio}
               onChange={(e) => handleChange("bio", e.target.value)}
-              placeholder="Write a short bio about yourself..."
-              className="min-h-[100px] border"
+              placeholder=""
+              className="min-h-[100px] border border-gray-300 rounded-[8px]"
             />
           </div>
         </div>
+      </div>
+      <div className="flex justify-end space-x-4 mt-8">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          className="rounded-[8px] h-10 px-6 bg-white border border-gray-300 hover:bg-gray-50"
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          className="rounded-[8px] h-10 px-6 bg-[#003081] hover:bg-[#003081]/90 text-white"
+        >
+          Save
+        </Button>
       </div>
     </div>
   )

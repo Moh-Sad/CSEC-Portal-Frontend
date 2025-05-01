@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useAuth } from '@/context/AuthContext'; // Make sure this path is correct
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,

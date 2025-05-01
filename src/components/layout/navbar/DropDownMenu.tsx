@@ -24,6 +24,8 @@ export default function DropDownMenu() {
   const router = useRouter();
   const [fullName, setFullName] = useState("Loading...");
   const [role, setRole] = useState("User");
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const [avatarFallback, setAvatarFallback] = useState("");
 
   useEffect(() => {
     const userString = localStorage.getItem("user");
@@ -33,9 +35,20 @@ export default function DropDownMenu() {
         const fname = user?.personal_info?.first_name || "Guest";
         const lname = user?.personal_info?.last_name || "";
         const roleFromUser = user?.personal_info?.specialization || "NaN";
+        const profilePic = user?.personal_info?.profile_picture;
 
         setFullName(`${fname} ${lname}`);
         setRole(roleFromUser.charAt(0).toUpperCase() + roleFromUser.slice(1));
+        
+        // Set avatar image if available
+        if (profilePic) {
+          setAvatarSrc(profilePic);
+        } else {
+          // Generate initials if no image
+          const firstInitial = fname.charAt(0).toUpperCase();
+          const lastInitial = lname.charAt(0).toUpperCase();
+          setAvatarFallback(`${firstInitial}${lastInitial}`);
+        }
       } catch (error) {
         console.error("Failed to parse user from localStorage", error);
       }
@@ -56,8 +69,8 @@ export default function DropDownMenu() {
           <div className="flex w-full px-2 gap-2">
             <div className="flex w-fit items-center p-1">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src={avatarSrc || undefined} />
+                <AvatarFallback>{avatarFallback}</AvatarFallback>
               </Avatar>
             </div>
 

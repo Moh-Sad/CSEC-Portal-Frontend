@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { MdAddCircleOutline } from "react-icons/md";
 import { useState } from "react";
@@ -28,7 +28,6 @@ const divisions = [
   { id: "680a9a2e9e86262d7c618bda", name: "Cyber Security" },
 ];
 
-// Simplified group names while keeping original IDs
 const allGroups: Record<string, { id: string; name: string }[]> = {
   "680a9a2b9e86262d7c618bd1": [
     { id: "680a9a2f9e86262d7c618bde", name: "Group 1" },
@@ -56,13 +55,18 @@ const allGroups: Record<string, { id: string; name: string }[]> = {
   ],
 };
 
-export function AddMemberDialog() {
+interface AddMemberDialogProps {
+  onMemberAdded: () => void;
+}
+
+export function AddMemberDialog({ onMemberAdded }: AddMemberDialogProps) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [divisionId, setDivision] = useState("");
   const [groupId, setGroup] = useState("");
   const [password, setPassword] = useState("");
   const [generatedPassword, setGeneratedPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<{
     show: boolean;
     title: string;
@@ -92,6 +96,7 @@ export function AddMemberDialog() {
       return;
     }
 
+    setIsSubmitting(true);
     try {
       const token = Cookies.get('accessToken');
       if (!token) {
@@ -110,7 +115,11 @@ export function AddMemberDialog() {
       });
 
       showToast("Member Invited", "Successfully invited the member!", 'success');
-
+      setTimeout(() => {
+        onMemberAdded(); // Trigger the refresh callback after a delay
+      }, 3000); 
+      
+      // Reset form
       setEmail("");
       setDivision("");
       setGroup("");
@@ -121,7 +130,6 @@ export function AddMemberDialog() {
       let errorMessage = "Something went wrong. Try again.";
       
       if (error.response) {
-        // Handle specific HTTP error codes
         if (error.response.status === 403) {
           errorMessage = "Forbidden: You don't have permission to perform this action.";
         } else if (error.response.status === 401) {
@@ -135,6 +143,8 @@ export function AddMemberDialog() {
 
       showToast("Invite Failed", errorMessage, 'error');
       console.log("Invite Error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -164,7 +174,7 @@ export function AddMemberDialog() {
             <div className="space-y-2">
               <Select value={divisionId} onValueChange={(value) => {
                 setDivision(value);
-                setGroup(""); // Reset group when division changes
+                setGroup("");
               }}>
                 <SelectTrigger className="flex w-70 h-11 px-3 py-6 border-1 border-gray-300 rounded-[8px]">
                   <SelectValue placeholder="Select Division" />
@@ -238,6 +248,7 @@ export function AddMemberDialog() {
                 onClick={() => setOpen(false)}
                 className="flex h-10 w-35 rounded-md items-center justify-center bg-[#34495E0D] cursor-pointer hover:bg-[#48637e0d]"
                 aria-label="Cancel"
+                disabled={isSubmitting}
               >
                 <h3 className="ml-1"> Cancel </h3>
               </Button>
@@ -248,15 +259,17 @@ export function AddMemberDialog() {
                 onClick={handleInvite}
                 className="flex h-10 w-35 rounded-md items-center justify-center bg-[#003087] cursor-pointer hover:bg-[#002f87a2]"
                 aria-label="Invite"
+                disabled={isSubmitting}
               >
-                <h3 className="text-[#F8F8F8] ml-1"> Invite </h3>
+                <h3 className="text-[#F8F8F8] ml-1">
+                  {isSubmitting ? "Adding..." : "Invite"}
+                </h3>
               </Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Manual Toast Implementation */}
       {toast.show && (
         <div className={`fixed top-4 right-4 z-100 p-4 rounded-md shadow-lg ${
           toast.type === 'success' ? 'bg-green-400' : 'bg-red-400'

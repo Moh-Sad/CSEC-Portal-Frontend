@@ -17,20 +17,17 @@ export async function handleLogin(data: FormData) {
     });
 
     const responseData = await response.json();
-    console.log('FULL login response:', responseData);
-
     const accessToken = responseData.accessToken;
     const refreshToken = responseData.refreshToken || null;
     const role = responseData.user?.role || null;
     const user = responseData.user || null;
 
-    if (!accessToken || !role) {
+    if (!accessToken && !role) {
       throw new Error("Missing access token or role from server.");
     }
 
     // Build cookie options
     const cookieOptions = {
-      sameSite: 'Lax' as const,
       secure: process.env.NODE_ENV === 'production',
       ...(data.rememberMe ? { expires: 7 } : {}),
     };
@@ -45,23 +42,12 @@ export async function handleLogin(data: FormData) {
       localStorage.setItem('user', JSON.stringify(user));
     }
 
-    console.log('Saved auth data:', {
-      cookies: {
-        accessToken: Cookies.get('accessToken'),
-        refreshToken: Cookies.get('refreshToken'),
-        role: Cookies.get('role'),
-      },
-      localStorage: {
-        user: user
-      }
-    });
-
     return {
       success: true,
       data: responseData,
     };
   } catch (error) {
-    console.error("Login failed:", error);
+    console.log("Login failed:", error);
     // Clear user data on error
     localStorage.removeItem('user');
     return {

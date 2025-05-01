@@ -1,80 +1,97 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { format } from "date-fns"
-import { CalendarIcon, X } from "lucide-react"
-import Image from "next/image"
+import type React from "react";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { format } from "date-fns";
+import { CalendarIcon, X } from "lucide-react";
+import Image from "next/image";
 
 interface RequiredInformationProps {
   formData: {
-    firstName: string
-    lastName: string
-    mobileNumber: string
-    email: string
-    dateOfBirth: string
-    gender: string
-    expectedGradYear: string
-    otherDepartment: string
-    github: string
-    telegramHandle: string
-    member: string
-    photo: File | null
-  }
-  handleChange: (field: string, value: string | File | null) => void
-  onNext: () => void
-  onCancel: () => void
-  isUpdating?: boolean
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    email: string;
+    birth_date: string;
+    gender: string;
+    graduation_year: string;
+    department: string;
+    github_handle: string;
+    specialization: string 
+    telegram_handle: string;
+    role: string;
+    profile_picture: File | null;
+    profile_picture_url: string;
+    photo: File | null;
+  };
+  handleChange: (field: string, value: string | File | null) => void;
+  onNext: () => void;
+  onCancel: () => void;
+  isUpdating?: boolean;
 }
 
-export default function RequiredInformation({ 
-  formData, 
-  handleChange, 
-  onNext, 
-  onCancel, 
-  isUpdating = false 
+export default function RequiredInformation({
+  formData,
+  handleChange,
+  onNext,
+  onCancel,
+  isUpdating = false,
 }: RequiredInformationProps) {
-  const [date, setDate] = useState<Date | undefined>(formData.dateOfBirth ? new Date(formData.dateOfBirth) : undefined)
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [date, setDate] = useState<Date | undefined>(
+    formData.birth_date ? new Date(formData.birth_date) : undefined
+  );
+  const [photoPreview, setPhotoPreview] = useState<string | null>(
+    formData.profile_picture_url || null
+  );
 
   const handleDateChange = (date: Date | undefined) => {
-    setDate(date)
+    setDate(date);
     if (date) {
-      handleChange("dateOfBirth", format(date, "yyyy-MM-dd"))
+      handleChange("birth_date", format(date, "yyyy-MM-dd"));
     }
-  }
+  };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      handleChange("photo", file)
+      const file = e.target.files[0];
+      handleChange("profile_picture", file);
 
-      // Create preview URL
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = () => {
-        setPhotoPreview(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const removePhoto = () => {
-    handleChange("photo", null)
-    setPhotoPreview(null)
-  }
+    handleChange("profile_picture", null);
+    handleChange("profile_picture_url", "");
+    setPhotoPreview(null);
+  };
 
   return (
     <div className="p-6 space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Column */}
         <div className="space-y-2">
-          <div className="flex flex-col items-center mb-6">
+          <div className="flex flex-col items-start mb-6">
             <div className="relative w-24 h-24 mb-2">
               {photoPreview ? (
                 <>
@@ -98,169 +115,194 @@ export default function RequiredInformation({
                 </div>
               )}
             </div>
-            <Label htmlFor="photo" className="cursor-pointer text-sm text-primary">
+            <Label
+              htmlFor="profile_picture"
+              className="cursor-pointer text-sm text-primary"
+            >
               Upload Photo
             </Label>
-            <Input 
-              id="photo" 
-              type="file" 
-              accept="image/*" 
-              className="hidden" 
-              onChange={handlePhotoChange} 
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="firstName"></Label>
             <Input
-              id="firstName"
-              value={formData.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
-              placeholder="First Name"
-              required
-              className="border border-gray-300 rounded-[8px]"
+              id="profile_picture"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoChange}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="mobileNumber"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="first_name" className="text-gray-500 text-sm">
+              First Name
+            </Label>
             <Input
-              id="mobileNumber"
-              value={formData.mobileNumber}
-              onChange={(e) => handleChange("mobileNumber", e.target.value)}
-              placeholder="Mobile Number"
+              id="first_name"
+              value={formData.first_name}
+              onChange={(e) => handleChange("first_name", e.target.value)}
+              placeholder=""
               required
-              className="border border-gray-300 rounded-[8px]"
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="dateOfBirth"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="phone_number" className="text-gray-500 text-sm">
+              Mobile Number
+            </Label>
+            <Input
+              id="phone_number"
+              value={formData.phone_number}
+              onChange={(e) => handleChange("phone_number", e.target.value)}
+              placeholder=""
+              required
+              className="border border-gray-300 rounded-[8px] h-10"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="birth_date" className="text-gray-500 text-sm">
+              Date of Birth
+            </Label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full justify-start text-left font-normal border border-gray-300 rounded-[8px] h-10"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Date of Birth</span>}
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar 
-                  mode="single" 
-                  selected={date} 
-                  onSelect={handleDateChange} 
-                  initialFocus 
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={handleDateChange}
                 />
               </PopoverContent>
             </Popover>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="expectedGradYear"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="graduation_year" className="text-gray-500 text-sm">
+              Expected Graduation Year
+            </Label>
             <Input
-              id="expectedGradYear"
-              value={formData.expectedGradYear}
-              onChange={(e) => handleChange("expectedGradYear", e.target.value)}
-              placeholder="Expected Graduation Year"
-              className="border border-gray-300 rounded-[8px]"
+              id="graduation_year"
+              value={formData.graduation_year}
+              onChange={(e) => handleChange("graduation_year", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="otherDepartment"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="department" className="text-gray-500 text-sm">
+              Department
+            </Label>
             <Input
-              id="otherDepartment"
-              value={formData.otherDepartment}
-              onChange={(e) => handleChange("otherDepartment", e.target.value)}
-              placeholder="Other Department"
-              className="border border-gray-300 rounded-[8px]"
+              id="department"
+              value={formData.department}
+              onChange={(e) => handleChange("department", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
         </div>
 
         {/* Right Column */}
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="lastName"></Label>
+        <div className="flex flex-col justify-end space-y-6">
+          <div className="space-y-1">
+            <Label htmlFor="last_name" className="text-gray-500 text-sm">
+              Last Name
+            </Label>
             <Input
-              id="lastName"
-              value={formData.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
-              placeholder="Last Name"
+              id="last_name"
+              value={formData.last_name}
+              onChange={(e) => handleChange("last_name", e.target.value)}
+              placeholder=""
               required
-              className="border border-gray-300 rounded-[8px]"
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="email" className="text-gray-500 text-sm">
+              Email Address
+            </Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
-              placeholder="Email Address"
+              placeholder=""
               required
-              className="border border-gray-300 rounded-[8px]"
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="gender"></Label>
-            <Select 
-              value={formData.gender} 
+          <div className="space-y-1">
+            <Label htmlFor="gender" className="text-gray-500 text-sm">
+              Gender
+            </Label>
+            <Select
+              value={formData.gender}
               onValueChange={(value) => handleChange("gender", value)}
             >
-              <SelectTrigger className="border border-gray-300 rounded-[8px]">
+              <SelectTrigger className="border border-gray-300 rounded-[8px] h-10">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="male">Male</SelectItem>
                 <SelectItem value="female">Female</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
-                <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                <SelectItem value="prefer-not-to-say">
+                  Prefer not to say
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="github"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="specialization" className="text-gray-500 text-sm">
+              Specialization
+            </Label>
             <Input
-              id="github"
-              value={formData.github}
-              onChange={(e) => handleChange("github", e.target.value)}
-              placeholder="GitHub"
-              className="border border-gray-300 rounded-[8px]"
+              id="specialization"
+              value={formData.specialization}
+              onChange={(e) => handleChange("specialization", e.target.value)}
+              placeholder="e.g. Frontend Developer"
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="telegramHandle"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="github_handle" className="text-gray-500 text-sm">
+              GitHub
+            </Label>
             <Input
-              id="telegramHandle"
-              value={formData.telegramHandle}
-              onChange={(e) => handleChange("telegramHandle", e.target.value)}
-              placeholder="Telegram Handle"
-              className="border border-gray-300 rounded-[8px]"
+              id="github_handle"
+              value={formData.github_handle}
+              onChange={(e) => handleChange("github_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="member"></Label>
+          <div className="space-y-1">
+            <Label htmlFor="telegram_handle" className="text-gray-500 text-sm">
+              Telegram Handle
+            </Label>
             <Input
-              id="member"
-              value={formData.member}
-              onChange={(e) => handleChange("member", e.target.value)}
-              placeholder="Member"
-              className="border border-gray-300 rounded-[8px]"
+              id="telegram_handle"
+              value={formData.telegram_handle}
+              onChange={(e) => handleChange("telegram_handle", e.target.value)}
+              placeholder=""
+              className="border border-gray-300 rounded-[8px] h-10"
             />
           </div>
         </div>
       </div>
 
-      {/* Single set of action buttons at the bottom */}
       <div className="flex justify-end space-x-4 mt-8">
         <Button
           type="button"
@@ -275,11 +317,11 @@ export default function RequiredInformation({
           onClick={onNext}
           className="rounded-[8px] h-10 px-6 bg-[#003081] hover:bg-[#003081]/90 text-white"
         >
-          {isUpdating ? 'Update' : 'Next'}
+          {isUpdating ? "Update" : "Next"}
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 function UserIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -299,5 +341,5 @@ function UserIcon(props: React.SVGProps<SVGSVGElement>) {
       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
     </svg>
-  )
+  );
 }

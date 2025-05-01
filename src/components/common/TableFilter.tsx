@@ -7,6 +7,7 @@ import { LuSearch } from "react-icons/lu";
 import { AddMemberDialog } from "./AddMemberDialog";
 import { Button } from "../ui/button";
 import { LuImport } from "react-icons/lu";
+import { ChangeEvent, useState } from "react";
 
 interface TableFilterProps {
   onSearch?: (value: string) => void;
@@ -18,7 +19,25 @@ interface TableFilterProps {
   saveButton?: boolean;
 }
 
-export function TableFilter({ onFilter, className, importButton = false, addMembersButton = false, saveButton = false}: TableFilterProps) {
+export function TableFilter({ 
+  onSearch, 
+  onFilter, 
+  className, 
+  importButton = false, 
+  addMembersButton = false, 
+  saveButton = false,
+  placeholder = "Search"
+}: TableFilterProps) {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
+
   return (
     <div className={cn("flex justify-between items-center", className)}>
       <div className="flex justify-center gap-1 p-2 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
@@ -26,8 +45,10 @@ export function TableFilter({ onFilter, className, importButton = false, addMemb
         <div>
           <Input
             type="text"
-            placeholder="Search"
+            placeholder={placeholder}
             className="outline-none border-0 shadow-none focus:outline-0 focus:border-0 focus:shadow-none"
+            onChange={handleSearchChange}
+            value={searchValue}
           />
         </div>
       </div>
@@ -55,7 +76,7 @@ export function TableFilter({ onFilter, className, importButton = false, addMemb
         )}
         {addMembersButton && (
         <div>
-          <AddMemberDialog />
+          <AddMemberDialog onMemberAdded={() => { console.log("Member added"); }} />
         </div>
         )}
         <div

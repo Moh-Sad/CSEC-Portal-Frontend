@@ -25,18 +25,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const isTokenExpired = (token: string | null) => {
     if (!token) return true;
     try {
-      // Split token into parts
       const tokenParts = token.split('.');
       if (tokenParts.length !== 3) return true;
 
-      // Decode the payload
       const decoded = JSON.parse(atob(tokenParts[1]));
-      
-      // Get the expiration time and compare
-      const expirationTime = decoded.exp * 1000; // JWT expiration time is in seconds
+      const expirationTime = decoded.exp * 1000; 
       return Date.now() > expirationTime;
     } catch (error) {
-      return true; // If the token can't be decoded, assume it's expired
+      return true;
     }
   };
 
@@ -44,10 +40,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const accessToken = Cookies.get('accessToken');
     const savedRole = Cookies.get('role');
 
-    // If there's an access token, check if it's expired
     if (accessToken && savedRole) {
       if (isTokenExpired(accessToken)) {
-        // Token expired, log out the user
         logout();
       } else {
         setRole(savedRole);

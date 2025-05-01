@@ -82,7 +82,7 @@ export function TablePagination({
   return (
     <div
       className={cn(
-        "p-3 flex items-center justify-between text-sm text-muted-foreground",
+        "p-3 flex items-center justify-between text-sm",
         className
       )}
     >
@@ -140,7 +140,7 @@ export function TablePagination({
                 if (currentPage > 1) onPageChange(currentPage - 1);
               }}
               className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                currentPage === 1 ? "pointer-events-none" : ""
               }
             />
           </PaginationItem>
@@ -155,8 +155,9 @@ export function TablePagination({
             }
 
             return (
-              <PaginationItem key={`page-${page}`}>
+              <PaginationItem key={`page-${page}`} className="border-1 border-[#003087] rounded-[8px]">
                 <PaginationLink
+                className="text-[#003087]"
                   href="#"
                   isActive={currentPage === page}
                   onClick={(e) => {
@@ -179,7 +180,7 @@ export function TablePagination({
               }}
               className={
                 currentPage === totalPages
-                  ? "pointer-events-none opacity-50"
+                  ? "pointer-events-none"
                   : ""
               }
             />

@@ -12,8 +12,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import api from "@/lib/axios";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface ApiMember {
   _id: string;
@@ -31,16 +42,73 @@ interface ApiMember {
   updatedAt: string;
 }
 
+interface Division {
+  _id: string;
+  name: string;
+  members: {
+    _id: string;
+    email: string;
+  }[];
+  coordinators: any[];
+  year_of_establishment: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 interface MembersTableProps {
   apiMembers: ApiMember[];
   className?: string;
+  onDeleteSuccess?: () => void;
 }
 
-export function MembersTable({ apiMembers, className }: MembersTableProps) {
+export function MembersTable({ apiMembers, className, onDeleteSuccess }: MembersTableProps) {
   const router = useRouter();
+  const currentUserRole = Cookies.get('role');
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState<ApiMember | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [divisions, setDivisions] = useState<Division[]>([]);
+  const [loadingDivisions, setLoadingDivisions] = useState(true);
+
+  useEffect(() => {
+    const fetchDivisions = async () => {
+      try {
+        const token = Cookies.get('accessToken');
+        if (!token) return;
+
+        const response = await api.get('/division', {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'ngrok-skip-browser-warning': 'true'
+          },
+          withCredentials: false
+        });
+
+        if (response.data && Array.isArray(response.data.data)) {
+          setDivisions(response.data.data); // Now accessing response.data.data
+        }
+      } catch (error) {
+        console.error("Failed to fetch divisions:", error);
+      } finally {
+        setLoadingDivisions(false);
+      }
+    };
+
+    fetchDivisions();
+  }, []);
+
+  const getMemberDivision = (memberId: string) => {
+    if (loadingDivisions) return "Loading...";
+    
+    const division = divisions.find(div => 
+      div.members.some(m => m._id === memberId)
+    );
+    
+    return division ? division.name : "No Division";
+  };
 
   const getMemberDisplayData = (member: ApiMember) => {
-    // Get name from personal_info or use email prefix
     const name =
       member.personal_info?.first_name || member.personal_info?.last_name
         ? `${member.personal_info.first_name || ""} ${
@@ -48,13 +116,9 @@ export function MembersTable({ apiMembers, className }: MembersTableProps) {
           }`.trim()
         : member.email.split("@")[0];
 
-    // Get avatar from personal_info or use default
     const avatar = member.personal_info?.profile_picture;
-
-    // Get ID from personal_info or use _id
     const id = member.personal_info?.university_id || member._id;
 
-    // Calculate year based on graduation year if available
     let year = "N/A";
     if (member.personal_info?.graduation_year) {
       const currentYear = new Date().getFullYear();
@@ -66,7 +130,6 @@ export function MembersTable({ apiMembers, className }: MembersTableProps) {
       else if (diff === 4) year = "1st";
     }
 
-    // Determine activity status based on last update
     const lastUpdated = new Date(member.updatedAt);
     const currentDate = new Date();
     const monthsSinceUpdate =
@@ -93,14 +156,37 @@ export function MembersTable({ apiMembers, className }: MembersTableProps) {
     };
   };
 
-  const handleEdit = (memberId: string, e: React.MouseEvent) => {
+  const handleDeleteClick = (member: ApiMember, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log("Edit member:", memberId);
+    setMemberToDelete(member);
+    setDeleteDialogOpen(true);
   };
 
-  const handleDelete = (memberId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    console.log("Delete member:", memberId);
+  const confirmDelete = async () => {
+    if (!memberToDelete) return;
+    
+    setIsDeleting(true);
+    try {
+      const token = Cookies.get('accessToken');
+      if (!token) throw new Error('Authentication required');
+
+      await api.delete(`/user/${memberToDelete._id}`, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
+        },
+        withCredentials: false
+      });
+
+      if (onDeleteSuccess) {
+        onDeleteSuccess();
+      }
+    } catch (error) {
+      console.error("Failed to delete member:", error);
+    } finally {
+      setIsDeleting(false);
+      setDeleteDialogOpen(false);
+    }
   };
 
   if (!apiMembers || apiMembers.length === 0) {
@@ -108,117 +194,149 @@ export function MembersTable({ apiMembers, className }: MembersTableProps) {
   }
 
   return (
-    <div className={cn("rounded-lg border overflow-hidden", className)}>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="text-gray-500">Member Name</TableHead>
-            <TableHead className="text-gray-500">Member ID</TableHead>
-            <TableHead className="text-gray-500">Division</TableHead>
-            <TableHead className="text-gray-500">Attendance</TableHead>
-            <TableHead className="text-gray-500">Year</TableHead>
-            <TableHead className="text-gray-500">Status</TableHead>
-            <TableHead className="text-gray-500 text-center">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {apiMembers.map((member) => {
-            const displayData = getMemberDisplayData(member);
-            return (
-              <TableRow
-                key={displayData.id}
-                className="cursor-pointer hover:bg-gray-50"
-                onClick={() =>
-                  router.push(
-                    `/dashboard/allmembers/profile?id=${displayData.id}`
-                  )
-                }
-              >
-                <TableCell>
-                  <div className="flex items-center gap-3 p-1">
-                    <Avatar>
-                      <AvatarImage
-                        src={displayData.avatar}
-                        alt={displayData.name}
-                      />
-                      <AvatarFallback>
-                        {getInitials(displayData.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="font-medium">{displayData.name}</div>
-                  </div>
-                </TableCell>
-                <TableCell>{displayData.id}</TableCell>
-                <TableCell>
-                  <Badge variant="outline" className="capitalize">
-                    {displayData.role}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      displayData.attendance === "Active"
-                        ? "text-green-500 bg-green-50"
-                        : "",
-                      displayData.attendance === "Inactive"
-                        ? "text-red-500 bg-red-50"
-                        : "",
-                      displayData.attendance === "Needs Attention"
-                        ? "text-amber-500 bg-amber-50"
-                        : ""
-                    )}
-                  >
-                    {displayData.attendance}
-                  </Badge>
-                </TableCell>
-                <TableCell>{displayData.year}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      displayData.status === "OnCampus"
-                        ? "outline"
-                        : "secondary"
-                    }
-                    className={cn(
-                      displayData.status === "OnCampus"
-                        ? "text-green-500 bg-green-50"
-                        : "",
-                      displayData.status === "OffCampus"
-                        ? "text-red-500 bg-red-50"
-                        : ""
-                    )}
-                  >
-                    {displayData.status}
-                  </Badge>
-                </TableCell>
+    <>
+      <div className={cn("rounded-lg border overflow-hidden", className)}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-gray-500">Member Name</TableHead>
+              <TableHead className="text-gray-500">Member ID</TableHead>
+              <TableHead className="text-gray-500">Division</TableHead>
+              <TableHead className="text-gray-500">Attendance</TableHead>
+              <TableHead className="text-gray-500">Year</TableHead>
+              <TableHead className="text-gray-500">Status</TableHead>
+              {currentUserRole !== 'member' && (
+                <TableHead className="text-gray-500 text-center">Actions</TableHead>
+              )}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {apiMembers.map((member) => {
+              const displayData = getMemberDisplayData(member);
+              return (
+                <TableRow
+                  key={displayData.id}
+                  className="cursor-pointer hover:bg-gray-50"
+                  onClick={() =>
+                    router.push(
+                      `/dashboard/allmembers/profile?id=${member._id}`
+                    )
+                  }
+                >
+                  <TableCell>
+                    <div className="flex items-center gap-3 p-1">
+                      <Avatar>
+                        <AvatarImage
+                          src={displayData.avatar}
+                          alt={displayData.name}
+                        />
+                        <AvatarFallback>
+                          {getInitials(displayData.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="font-medium">{displayData.name}</div>
+                    </div>
+                  </TableCell>
+                  <TableCell>{displayData.id}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="capitalize">
+                      {getMemberDivision(member._id)}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        displayData.attendance === "Active"
+                          ? "text-green-500 bg-green-50"
+                          : "",
+                        displayData.attendance === "Inactive"
+                          ? "text-red-500 bg-red-50"
+                          : "",
+                        displayData.attendance === "Needs Attention"
+                          ? "text-amber-500 bg-amber-50"
+                          : ""
+                      )}
+                    >
+                      {displayData.attendance}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{displayData.year}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                          displayData.status === "OnCampus"
+                            ? "outline"
+                            : "secondary"
+                      }
+                      className={cn(
+                        displayData.status === "OnCampus"
+                          ? "text-green-500 bg-green-50"
+                          : "",
+                        displayData.status === "OffCampus"
+                          ? "text-red-500 bg-red-50"
+                          : ""
+                      )}
+                    >
+                      {displayData.status}
+                    </Badge>
+                  </TableCell>
 
-                <TableCell>
-                  <div className="flex justify-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={(e) => handleEdit(displayData.id, e)}
-                    >
-                      <Pencil className="h-4 w-4 text-gray-500" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={(e) => handleDelete(displayData.id, e)}
-                    >
-                      <Trash2 className="h-4 w-4 text-red-500" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
+                  {currentUserRole !== 'member' && (
+                    <TableCell>
+                      <div className="flex justify-center">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 hover:bg-transparent group"
+                          onClick={(e) => handleDeleteClick(member, e)}
+                        >
+                          <Trash2 className="h-4 w-4 group-hover:text-red-500" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  )}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete {memberToDelete?.personal_info?.first_name 
+                ? `${memberToDelete.personal_info.first_name} ${memberToDelete.personal_info.last_name || ''}` 
+                : memberToDelete?.email}?
+              <br />
+              This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={isDeleting}
+              className="rounded-[10px] p-2"
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="destructive" 
+              onClick={confirmDelete}
+              disabled={isDeleting}
+              className="rounded-[10px] p-2"
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
