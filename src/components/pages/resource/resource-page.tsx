@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Plus, ChevronDown, ChevronUp, FileText, Edit } from "lucide-react"
+import { Plus, ChevronDown, ChevronUp, FileText, ExternalLink } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 import api from "@/lib/axios"
 import AddResourceModal from "./add-resource-model"
@@ -15,30 +15,29 @@ export interface Resource {
   link: string
   division: DivisionType
   divisionID?: string
-  isLocal?: boolean
 }
 
 const DIVISION_MAP: Record<DivisionType, { id: string; name: string; description: string }> = {
   cpd: {
     id: "680a9a2b9e86262d7c618bd1",
     name: "CPD",
-    description: "Useful resources and progress sheet for the CPD division."
+    description: "Useful resources and progress sheet for the CPD division.",
   },
   dev: {
     id: "680a9a2c9e86262d7c618bd4",
     name: "DEV",
-    description: "Useful resources and progress sheet for the Dev division."
+    description: "Useful resources and progress sheet for the Dev division.",
   },
   cyber: {
-    id: "680a9a2d9e86262d7c618bd7", 
+    id: "680a9a2d9e86262d7c618bd7",
     name: "CYBER",
-    description: "Useful resources and progress sheet for the Cyber division."
+    description: "Useful resources and progress sheet for the Cyber division.",
   },
   data_science: {
     id: "680a9a2e9e86262d7c618bda",
     name: "DATA SCIENCE",
-    description: "Useful resources and progress sheet for the Data Science division."
-  }
+    description: "Useful resources and progress sheet for the Data Science division.",
+  },
 }
 
 export default function ResourcePage() {
@@ -48,39 +47,76 @@ export default function ResourcePage() {
     cpd: true,
     dev: false,
     cyber: false,
-    data_science: false
+    data_science: false,
   })
   const { toast } = useToast()
+
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    const match = document.cookie.match(/accessToken=([^;]+)/)
+    setToken(match?.[1] || null)
+  }, [])
 
   const [resources, setResources] = useState<Record<DivisionType, Resource[]>>({
     cpd: [],
     dev: [],
     cyber: [],
-    data_science: []
+    data_science: [],
   })
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchResources = async () => {
+    if (!token) return
+  
     setIsLoading(true)
     try {
-      const response = await api.get('/resource')
-      const allResources = response.data.map((resource: any) => ({
-        _id: resource._id,
-        name: resource.name,
-        link: resource.link,
-        division: Object.keys(DIVISION_MAP).find(
-          key => DIVISION_MAP[key as DivisionType].id === resource.division._id
-        ) as DivisionType,
-        divisionID: resource.division._id
-      }))
-      
-      setResources({
-        cpd: allResources.filter((r: { division: string }) => r.division === 'cpd'),
-        dev: allResources.filter((r: { division: string }) => r.division === 'dev'),
-        cyber: allResources.filter((r: { division: string }) => r.division === 'cyber'),
-        data_science: allResources.filter((r: { division: string }) => r.division === 'data_science')
+      const response = await api.get(`/resource`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
+        }
       })
+
+      // Create a reverse mapping of division IDs to DivisionType
+      const divisionIdToType: Record<string, DivisionType> = {};
+      Object.entries(DIVISION_MAP).forEach(([type, data]) => {
+        divisionIdToType[data.id] = type as DivisionType;
+      });
+
+      const allResources: Resource[] = response.data.map((resource: any) => {
+        const divisionType = divisionIdToType[resource.division._id];
+        
+        if (!divisionType) {
+          console.warn(`Unknown division ID: ${resource.division._id}`);
+          return null;
+        }
+
+        return {
+          _id: resource._id,
+          name: resource.name,
+          link: resource.link,
+          division: divisionType,
+          divisionID: resource.division._id,
+        }
+      }).filter(Boolean) as Resource[]; // Filter out any null values
+
+      // Initialize the resources object with empty arrays for each division
+      const newResources = {
+        cpd: [],
+        dev: [],
+        cyber: [],
+        data_science: [],
+      } as Record<DivisionType, Resource[]>
+  
+      // Populate the resources
+      allResources.forEach(resource => {
+        newResources[resource.division].push(resource)
+      })
+  
+      setResources(newResources)
     } catch (error) {
+      console.error("Error fetching resources:", error);
       toast({
         title: "Error",
         description: "Failed to fetch resources",
@@ -94,45 +130,69 @@ export default function ResourcePage() {
 
   useEffect(() => {
     fetchResources()
-  }, [])
+  }, [token])
 
   const toggleExpanded = (division: DivisionType) => {
-    setExpandedStates(prev => ({
+    setExpandedStates((prev) => ({
       ...prev,
-      [division]: !prev[division]
+      [division]: !prev[division],
     }))
   }
 
-  const handleAddSuccess = async (newResource: Omit<Resource, '_id'>) => {
+  const handleAddSuccess = async (newResource: Omit<Resource, "_id">) => {
+    if (!token) return
+
     const division = newResource.division
     const divisionId = DIVISION_MAP[division].id
-    
+
+    const tempId = `temp-${Date.now()}`
+    const optimisticResource: Resource = {
+      _id: tempId,
+      name: newResource.name,
+      link: newResource.link,
+      division: division,
+      divisionID: divisionId,
+    }
+
+    setResources(prev => ({
+      ...prev,
+      [division]: [...prev[division], optimisticResource],
+    }))
+
     try {
-      const response = await api.post('/resource', {
+      const response = await api.post("/resource", {
         name: newResource.name,
         link: newResource.link,
-        division: divisionId
+        division: divisionId,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
+        }
       })
-
-      const createdResource: Resource = {
-        ...newResource,
-        _id: response.data._id,
-        divisionID: divisionId
-      }
 
       setResources(prev => ({
         ...prev,
-        [division]: [...prev[division], createdResource]
+        [division]: prev[division].map(res =>
+          res._id === tempId
+            ? { ...res, _id: response.data._id }
+            : res
+        ),
       }))
-      
+
       toast({
         title: "Success",
         description: "Resource added successfully",
         id: ""
       })
-      
+
       setShowAddResourceModal(false)
     } catch (error) {
+      setResources(prev => ({
+        ...prev,
+        [division]: prev[division].filter(res => res._id !== tempId),
+      }))
+
       toast({
         title: "Error",
         description: "Failed to add resource",
@@ -142,20 +202,18 @@ export default function ResourcePage() {
     }
   }
 
-  const renderDivisionSection = (division: DivisionType, showAddButton: boolean = false) => {
+  const renderDivisionSection = (division: DivisionType, showAddButton = false) => {
     const divisionData = DIVISION_MAP[division]
     const divisionResources = resources[division]
     const isExpanded = expandedStates[division]
 
     return (
-      <div key={division} className="rounded-md shadow-sm overflow-hidden border border-gray-200">
-        <div className="p-4 bg-white">
+      <div key={division} className="rounded-md overflow-hidden border border-gray-200 mb-4">
+        <div className="p-4 ">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="font-medium text-gray-900">{divisionData.name}</h2>
-              <p className="text-sm text-gray-500 mt-1">
-                {divisionData.description}
-              </p>
+              <h2 className="font-medium ">{divisionData.name}</h2>
+              <p className="text-sm text-gray-500 mt-1">{divisionData.description}</p>
             </div>
             {showAddButton && (
               <Button
@@ -172,7 +230,7 @@ export default function ResourcePage() {
           </div>
         </div>
 
-        <div className="border-t border-gray-100 bg-gray-50">
+        <div className="border-t border-gray-100 ">
           <div
             className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100"
             onClick={() => toggleExpanded(division)}
@@ -186,23 +244,28 @@ export default function ResourcePage() {
           </div>
 
           {isExpanded && (
-            <div className="border-t border-gray-200 bg-white">
-              {divisionResources.length === 0 && !isLoading ? (
-                <div className="p-4 text-sm text-gray-500">No resources found</div>
+            <div className="border-t border-gray-200">
+              {divisionResources.length === 0 ? (
+                <div className="p-4 text-sm text-gray-500">
+                  {isLoading ? "Loading..." : "No resources found"}
+                </div>
               ) : (
                 divisionResources.map((resource) => (
-                  <div key={resource._id} className="flex items-center justify-between p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                  <div
+                    key={resource._id}
+                    className="flex items-center justify-between p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                  >
                     <div className="flex items-center gap-3">
                       <FileText className="w-4 h-4 text-gray-400" />
                       <span className="text-sm">{resource.name}</span>
                     </div>
-                    <a 
-                      href={resource.link} 
-                      target="_blank" 
+                    <a
+                      href={resource.link}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-gray-600"
                     >
-                      <Edit className="w-4 h-4" />
+                      <ExternalLink className="w-4 h-4" />
                     </a>
                   </div>
                 ))
@@ -215,8 +278,8 @@ export default function ResourcePage() {
   }
 
   return (
-    <div className="min-h-screen p-4 bg-gray-100">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen p-4 md:p-6">
+      <div className="max-w-full mx-auto">
         <div className="space-y-4">
           {renderDivisionSection("cpd", true)}
           {renderDivisionSection("dev")}
@@ -232,7 +295,7 @@ export default function ResourcePage() {
         division={currentDivision}
         divisions={Object.entries(DIVISION_MAP).map(([key, value]) => ({
           id: key as DivisionType,
-          name: value.name
+          name: value.name,
         }))}
       />
     </div>
