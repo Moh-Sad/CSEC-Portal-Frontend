@@ -52,14 +52,12 @@ export default function SessionCalendar() {
               Authorization: `Bearer ${token}`,
               "ngrok-skip-browser-warning": "true",
             },
-            withCredentials: false,
           }),
           api.get("/division", {
             headers: {
               Authorization: `Bearer ${token}`,
               "ngrok-skip-browser-warning": "true",
             },
-            withCredentials: false,
           }),
         ]);
 
@@ -75,16 +73,13 @@ export default function SessionCalendar() {
     fetchData();
   }, []);
 
-  const getDivisionName = (divisionId: string) => {
-    const division = divisions.find((d) => d._id === divisionId);
-    return division ? division.name : divisionId;
-  };
+  const getDivisionName = (divisionId: string) =>
+    divisions.find((d) => d._id === divisionId)?.name || divisionId;
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
   const monthDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-  // Create a Set of dates that have sessions
   const sessionDates = new Set(
     sessions.map((session) => format(parseISO(session.date), "yyyy-MM-dd"))
   );
@@ -94,10 +89,7 @@ export default function SessionCalendar() {
     if (!isSameMonth(sessionDate, currentMonth)) return acc;
 
     const dateKey = format(sessionDate, "EEEE, dd MMMM yyyy");
-    if (!acc[dateKey]) {
-      acc[dateKey] = [];
-    }
-
+    acc[dateKey] = acc[dateKey] || [];
     acc[dateKey].push({
       time: session.startTime,
       division: session.division,
@@ -108,33 +100,23 @@ export default function SessionCalendar() {
   }, {} as Record<string, Array<{ time: string; division: string; title: string }>>);
 
   const startDay = monthStart.getDay();
-  const daysInMonth = monthDays.length;
-  const weeksInMonth = Math.ceil((startDay + daysInMonth) / 7);
-  const datesGrid = Array(weeksInMonth)
-    .fill([])
-    .map((_, weekIndex) => {
-      return Array(7)
-        .fill(null)
-        .map((_, dayIndex) => {
-          const dayOffset = weekIndex * 7 + dayIndex - startDay;
-          return dayOffset >= 0 && dayOffset < daysInMonth
-            ? monthDays[dayOffset]
-            : null;
-        });
-    });
+  const weeksInMonth = Math.ceil((startDay + monthDays.length) / 7);
+  const datesGrid = Array.from({ length: weeksInMonth }, (_, weekIndex) =>
+    Array.from({ length: 7 }, (_, dayIndex) => {
+      const dayOffset = weekIndex * 7 + dayIndex - startDay;
+      return dayOffset >= 0 && dayOffset < monthDays.length
+        ? monthDays[dayOffset]
+        : null;
+    })
+  );
 
-  const handlePrevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
-  };
+  const handlePrevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+  const handleNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
 
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   return (
-    <div className="space-y-4 border-1 border-gray-300 rounded-xl p-5 mt-3 w-full max-w-100 h-fit mr-3">
+    <div className="space-y-4 border border-gray-300 rounded-xl p-5 mt-3 w-full max-w-100 h-fit mr-3 dark:bg-gray-800">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <h3 className="text-lg font-semibold">Session</h3>
@@ -142,16 +124,16 @@ export default function SessionCalendar() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center mb-4">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
               <Button
                 variant="none"
                 size="icon"
                 className="h-7 w-7 bg-[#003087] rounded-[8px]"
                 onClick={handlePrevMonth}
               >
-                <ChevronLeft className="h-4 w-4" color="white" />
+                <ChevronLeft className="h-4 w-4 text-white" />
               </Button>
-              <div className=" font-semibold text-xl">
+              <div className="font-semibold text-xl">
                 {format(currentMonth, "MMMM, yyyy")}
               </div>
               <Button
@@ -160,7 +142,7 @@ export default function SessionCalendar() {
                 className="h-7 w-7 bg-[#003087] rounded-[8px]"
                 onClick={handleNextMonth}
               >
-                <ChevronRight className="h-4 w-4" color="white" />
+                <ChevronRight className="h-4 w-4 text-white" />
               </Button>
             </div>
           </div>
@@ -179,9 +161,7 @@ export default function SessionCalendar() {
                   key={i}
                   className={cn(
                     "aspect-square flex items-center justify-center rounded-full",
-                    date &&
-                      isSameDay(date, new Date()) &&
-                      "bg-[#003087] text-white",
+                    date && isSameDay(date, new Date()) && "bg-[#003087] text-white",
                     !date && "invisible",
                     date &&
                       sessionDates.has(format(date, "yyyy-MM-dd")) &&
@@ -226,9 +206,7 @@ export default function SessionCalendar() {
                   <div className="space-y-3">
                     {events.map((event, eventIdx) => (
                       <div key={eventIdx} className="flex gap-3">
-                        <div className="text-sm font-medium w-10">
-                          {event.time}
-                        </div>
+                        <div className="text-sm font-medium w-10">{event.time}</div>
                         <div className="flex-1">
                           <div className="text-xs text-muted-foreground">
                             {getDivisionName(event.division)}

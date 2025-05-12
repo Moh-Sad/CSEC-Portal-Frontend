@@ -40,11 +40,9 @@ export default function DropDownMenu() {
         setFullName(`${fname} ${lname}`);
         setRole(roleFromUser.charAt(0).toUpperCase() + roleFromUser.slice(1));
         
-        // Set avatar image if available
         if (profilePic) {
           setAvatarSrc(profilePic);
         } else {
-          // Generate initials if no image
           const firstInitial = fname.charAt(0).toUpperCase();
           const lastInitial = lname.charAt(0).toUpperCase();
           setAvatarFallback(`${firstInitial}${lastInitial}`);
@@ -65,32 +63,31 @@ export default function DropDownMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="flex w-full h-12 border-1 border-gray-300 rounded-[8px]">
-          <div className="flex w-full px-2 gap-2">
-            <div className="flex w-fit items-center p-1">
+        <Button className="flex w-fit h-12 border border-gray-300 rounded-[8px] dark:bg-gray-800 cursor-pointer">
+          <div className="flex w-full px-2 gap-2 items-center justify-between">
+            <div className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage src={avatarSrc || undefined} />
                 <AvatarFallback>{avatarFallback}</AvatarFallback>
               </Avatar>
+
+              <div className="hidden md:flex flex-col items-start justify-center">
+                <h1 className="font-bold text-sm">{fullName}</h1>
+                <h3 className="text-gray-600 text-xs">{role}</h3>
+              </div>
             </div>
 
-            <div className="flex flex-col w-fit items-start justify-center p-1">
-              <h1 className="font-bold">{fullName}</h1>
-              <h3 className="text-gray-600">{role}</h3>
-            </div>
-
-            <div className="flex items-center p-1">
+            <div className="hidden md:block">
               <Img src={DownArrow} alt="down arrow" width={20} height={20} />
             </div>
           </div>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-45">
-        <DropdownMenuLabel></DropdownMenuLabel>
+      <DropdownMenuContent className="w-auto mr-2">
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup>
           <DropdownMenuRadioItem value="top">
-            <div className="flex gap-2" onClick={() => router.push("/dashboard/profile")}>
+            <div className="flex gap-2 justify-center" onClick={() => router.push("/dashboard/profile")}>
               <FaRegUser />
               <div>My Profile</div>
             </div>

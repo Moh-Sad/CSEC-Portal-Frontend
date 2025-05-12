@@ -229,32 +229,15 @@ export default function Navbar({ time }: NavbarProps) {
   };
 
   return (
-    <div className="flex h-20 w-full mr-3 justify-between items-center p-2">
-      <div className="pl-1">
-        <div className="flex gap-3">
+    <div className="flex md:flex-row h-auto md:h-20 w-full mr-3 justify-between items-start md:items-center p-2 gap-2">
+      <div className="pl-1 w-full md:w-auto">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-3">
           <div>{getGreeting()}</div>
         </div>
       </div>
-
-      <div className="flex gap-3 w-auto justify-center items-center">
-        <div className="flex justify-center gap-1 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
-          <LuSearch size={45} className="p-3" />
-          <div>
-            <Input
-              type="text"
-              placeholder="Search"
-              className="outline-none border-0 shadow-none focus:outline-0 focus:border-0 focus:shadow-none"
-            />
-          </div>
-        </div>
-
-        <div className="flex w-12 h-12 bg-[#34495E1A] border-1 border-gray-300 rounded-[8px] justify-center items-center">
-          <GoBell size={20} />
-        </div>
-
-        <div>
-          <DropDownMenu />
-        </div>
+  
+      <div className="flex gap-3 w-full md:w-auto justify-end md:justify-center items-center">
+        <DropDownMenu />
       </div>
     </div>
   );
