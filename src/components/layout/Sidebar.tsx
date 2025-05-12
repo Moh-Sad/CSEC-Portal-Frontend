@@ -111,13 +111,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const route = useRouter();
 
   return (
-    <div className="flex h-full p-2 ml-1 mt-1">
+    <div className="flex h-fit">
       <Sidebar
         {...props}
         collapsible="offcanvas"
         className="flex justify-center"
       >
-        <div className="flex flex-col gap-5 bg-[#34495E0D] rounded-2xl w-58 h-auto">
+        <div className="flex flex-col gap-5 bg-[#34495E0D] rounded-2xl w-58 h-fit ml-2">
           <SidebarHeader className="pt-5">
             <div
               className="flex items-end justify-center gap-2 cursor-pointer"
