@@ -22,7 +22,7 @@ interface Division {
   description?: string
 }
 
-const currentUserRole = Cookies.get("role");
+const currentUserRole = Cookies.get("role")
 
 export default function ResourcePage() {
   const [showAddResourceModal, setShowAddResourceModal] = useState(false)
@@ -217,49 +217,55 @@ export default function ResourcePage() {
     const isExpanded = expandedStates[division._id] || false
 
     return (
-      <>
+      <div key={division._id} className="mb-6">
         <div className="flex justify-end gap-2">
           {currentUserRole !== "member" && showAddButton && (
             <Button
               variant="none"
               size="sm"
-              className="mb-4 p-1 h-10 bg-[#003087] text-white rounded-[8px] hover:bg-[#003087]/50"
+              className="mb-4 p-1 h-10 bg-[#003087] text-white rounded-lg hover:bg-[#003087]/90 w-fit sm:w-auto transition-colors duration-200"
               onClick={() => {
                 setCurrentDivision(division._id)
                 setShowAddResourceModal(true)
               }}
             >
-              <Plus /> Add Resource
+              <Plus className="inline mr-1 w-4 h-4 " />
+              <span className="sm:inline ">Add Resource</span>
             </Button>
           )}
         </div>
-        <div className="rounded-md overflow-hidden border border-gray-200 mb-4">
+        
+        <div className="rounded-lg overflow-hidden border  hover:shadow-md transition-all duration-200">
           <div className="p-4">
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="font-medium">{division.name}</h2>
-                <p className="text-sm text-gray-500 mt-1">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <h2 className="font-semibold text-lg sm:text-base  truncate">
+                  {division.name}
+                </h2>
+                <p className="text-sm  mt-1">
                   {division.description || `Useful resources for the ${division.name} division`}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-100">
+          <div className="border-t">
             <div
-              className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100"
+              className="flex justify-between items-center p-4 cursor-pointer h transition-colors duration-150"
               onClick={() => toggleExpanded(division._id)}
             >
-              <h3 className="font-medium text-sm">Resources ({divisionResources.length})</h3>
+              <h3 className="font-medium text-sm ">
+                Resources ({divisionResources.length})
+              </h3>
               {isExpanded ? (
-                <ChevronUp className="w-5 h-5 text-gray-400" />
+                <ChevronUp className="w-5 h-5 " />
               ) : (
-                <ChevronDown className="w-5 h-5 text-gray-400" />
+                <ChevronDown className="w-5 h-5 " />
               )}
             </div>
 
             {isExpanded && (
-              <div className="border-t border-gray-200">
+              <div className="border-t  divide-y divide-gray-200">
                 {divisionResources.length === 0 ? (
                   <div className="p-4 text-sm text-gray-500">
                     No resources found
@@ -268,17 +274,19 @@ export default function ResourcePage() {
                   divisionResources.map((resource) => (
                     <div
                       key={resource._id}
-                      className="flex items-center justify-between p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                      className="flex items-center justify-between p-4  transition-colors duration-150"
                     >
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-4 h-4 text-gray-400" />
-                        <span className="text-sm">{resource.name}</span>
+                      <div className="flex items-center gap-3 max-w-[85%]">
+                        <FileText className="flex-shrink-0 w-4 h-4 text-gray-500" />
+                        <span className="text-sm  truncate">
+                          {resource.name}
+                        </span>
                       </div>
                       <a
                         href={resource.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-gray-600"
+                        className=" hover:text-gray-700 flex-shrink-0 transition-colors duration-150"
                       >
                         <ExternalLink className="w-4 h-4" />
                       </a>
@@ -289,14 +297,14 @@ export default function ResourcePage() {
             )}
           </div>
         </div>
-      </>
+      </div>
     )
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
-      <div className="max-w-full mx-auto">
-        <div className="space-y-4">
+    <div className="min-h-screen  p-4 sm:p-6 lg:p-8">
+      <div className="max-w-full mx-auto w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
+        <div className="space-y-6">
           {divisions.length > 0 ? (
             <>
               {renderDivisionSection(divisions[0], true)}
@@ -307,7 +315,7 @@ export default function ResourcePage() {
               ))}
             </>
           ) : (
-            <div className="text-center py-8">
+            <div className="text-center py-8 ">
               No divisions found
             </div>
           )}

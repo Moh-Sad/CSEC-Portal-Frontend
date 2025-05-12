@@ -74,7 +74,7 @@ export default function AddResourceModal({
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 rounded-[8px]">
       <div className="rounded-[8px] w-100 mx-2">
         <form onSubmit={handleSubmit}>
-          <div className="p-6 rounded-2xl bg-white">
+          <div className="p-6 rounded-2xl bg-white dark:bg-gray-800">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Add Resource</h2>
               <button 
