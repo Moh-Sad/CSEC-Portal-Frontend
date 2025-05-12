@@ -116,7 +116,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Calendar Setting */}
-          <div className={`py-4 border-b ${theme === 'dark' ? 'border-gray-700' : ''} flex justify-between items-center`}>
+          <div className={`hidden py-4 border-b ${theme === 'dark' ? 'border-gray-700' : ''} flex justify-between items-center`}>
             <div>
               <h3 className="font-medium mb-1">Automatically Add Sessions to Calendar</h3>
               <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>

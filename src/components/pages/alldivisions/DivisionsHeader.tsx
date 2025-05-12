@@ -21,8 +21,8 @@ export default function DivisionHeader({
   const currentUserRole = Cookies.get("role");
 
   return (
-    <div className="flex items-center justify-between mx-4">
-      <div className="flex justify-center gap-1 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
+    <div className="flex items-center justify-end mx-4">
+      <div className="hidden justify-center gap-1 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
         <LuSearch size={45} className="p-3" />
         <Input
           type="text"

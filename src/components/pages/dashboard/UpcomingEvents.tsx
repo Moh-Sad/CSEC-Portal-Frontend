@@ -281,7 +281,7 @@ export default function UpcomingEvent() {
               <p className="text-base my-5 max-w-50">
                 Cross-division knowledge-sharing
               </p>
-              <div className="flex flex-col gap-1">
+              <div className="hidden flex-col gap-1">
                 <div className="flex items-end gap-2 mt-11 ml-6 mb-2">
                   <Button
                     variant="default"

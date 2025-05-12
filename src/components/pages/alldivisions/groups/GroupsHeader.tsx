@@ -69,8 +69,8 @@ export function GroupsHeader({ className, onGroupAdded }: TableFilterProps) {
   if (loading) return null;
 
   return (
-    <div className={cn("flex justify-between items-center p-5", className)}>
-      <div className="relative flex justify-center gap-1 p-2 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
+    <div className={cn("flex justify-end items-center p-5", className)}>
+      <div className="hidden justify-center gap-1 p-2 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600">
         <LuSearch size={23} />
         <div>
           <Input
