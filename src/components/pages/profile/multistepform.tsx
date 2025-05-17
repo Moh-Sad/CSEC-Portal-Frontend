@@ -14,7 +14,6 @@ export default function MultiStepForm() {
   const [userId, setUserId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [initialFormData, setInitialFormData] = useState({
-    // Required Information
     first_name: "",
     last_name: "",
     phone_number: "",
@@ -30,8 +29,6 @@ export default function MultiStepForm() {
     profile_picture: null as File | null,
     profile_picture_url: "",
     photo: null as File | null,
-
-    // Optional Information
     university_id: "",
     linkedin_handle: "",
     codeforce_handle: "",
@@ -42,8 +39,6 @@ export default function MultiStepForm() {
     bio: "",
     cv: null as File | null,
     cv_link: "",
-
-    // Resources
     resources: [{ name: "", link: "" }],
   });
 
@@ -149,7 +144,6 @@ export default function MultiStepForm() {
           profile_picture: null,
           profile_picture_url: personal_info?.profile_picture || "",
           photo: null,
-
           university_id: personal_info?.university_id || "",
           linkedin_handle: personal_info?.linkedin_handle || "",
           codeforce_handle: personal_info?.codeforce_handle || "",
@@ -162,7 +156,6 @@ export default function MultiStepForm() {
           bio: "",
           cv: null,
           cv_link: personal_info?.cv_link || "",
-
           resources: personal_info?.resources?.map((res: any) => ({
             name: res.name || "",
             link: res.link || "",
@@ -222,7 +215,6 @@ export default function MultiStepForm() {
 
       const formPayload = new FormData();
 
-      // Append all personal info fields
       formPayload.append("first_name", formData.first_name);
       formPayload.append("last_name", formData.last_name);
       formPayload.append("phone_number", formData.phone_number);
@@ -308,7 +300,6 @@ export default function MultiStepForm() {
       const token = Cookies.get("accessToken");
       if (!token) throw new Error("Authentication required");
   
-      // Filter out empty resources
       const validResources = formData.resources.filter(
         (resource) => resource.name.trim() && resource.link.trim()
       );
@@ -317,7 +308,6 @@ export default function MultiStepForm() {
         throw new Error("Please add at least one valid resource");
       }
   
-      // Submit each resource individually
       const promises = validResources.map(resource => {
         return api.post(
           `/resource`,
@@ -335,12 +325,9 @@ export default function MultiStepForm() {
         );
       });
   
-      // Wait for all requests to complete
-      const responses = await Promise.all(promises);
-  
+      await Promise.all(promises);
       showToast("Success", "Resources saved successfully");
   
-      // Update local storage with new resources
       const userString = localStorage.getItem("user");
       if (userString) {
         const user = JSON.parse(userString);
@@ -349,7 +336,6 @@ export default function MultiStepForm() {
         localStorage.setItem("user", JSON.stringify(user));
       }
   
-      // Update form data
       setInitialFormData((prev) => ({
         ...prev,
         resources: validResources,
@@ -387,7 +373,7 @@ export default function MultiStepForm() {
   }
 
   return (
-    <div className="max-w-full mx-auto rounded-lg shadow-md">
+    <div className="w-full px-4 sm:px-8 md:px-12 lg:px-20 py-8 mx-auto rounded-lg shadow-md">
       <div className="fixed top-4 right-4 z-50 space-y-2">
         {toasts.map((toast) => (
           <Toast
@@ -401,24 +387,24 @@ export default function MultiStepForm() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
           <TabsTrigger
             value="required"
-            className="flex items-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
             <UserIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Required Information</span>
+            <span className="hidden sm:inline">Required</span>
           </TabsTrigger>
           <TabsTrigger
             value="optional"
-            className="flex items-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
             <FileTextIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Optional Information</span>
+            <span className="hidden sm:inline">Optional</span>
           </TabsTrigger>
           <TabsTrigger
             value="resources"
-            className="flex items-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
             <FolderIcon className="h-4 w-4" />
             <span className="hidden sm:inline">Resources</span>
@@ -453,7 +439,7 @@ export default function MultiStepForm() {
               handleChange={handleChange}
               handleResourceChange={handleResourceChange}
               addResource={addResource}
-              onSave={() => {}} 
+              onSave={() => {}}
               onCancel={resetForm}
             />
           </form>
