@@ -387,27 +387,27 @@ export default function MultiStepForm() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+        <TabsList className="grid grid-cols-3 gap-2 mb-4 w-full">
           <TabsTrigger
             value="required"
-            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center w-3/4 sm:w-full gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
-            <UserIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Required</span>
+            <UserIcon className="h-5 w-5" />
+            <span className="sm:inline">Required</span>
           </TabsTrigger>
           <TabsTrigger
             value="optional"
-            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center w-3/4 sm:w-full gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
-            <FileTextIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Optional</span>
+            <FileTextIcon className="h-5 w-5" />
+            <span className="sm:inline">Optional</span>
           </TabsTrigger>
           <TabsTrigger
             value="resources"
-            className="flex items-center justify-center gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
+            className="flex items-center justify-center w-3/4 sm:w-full gap-2 data-[state=active]:text-[#003081] data-[state=active]:border-b-2 data-[state=active]:border-[#003081]"
           >
-            <FolderIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Resources</span>
+            <FolderIcon className="h-5 w-5" />
+            <span className="sm:inline">Resources</span>
           </TabsTrigger>
         </TabsList>
 
