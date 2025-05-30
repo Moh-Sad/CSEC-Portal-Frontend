@@ -60,7 +60,6 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
         const token = Cookies.get("accessToken");
         if (!token) return;
 
-        // Fetch events
         const eventsResponse = await api.get("/event", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +68,6 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
           withCredentials: false,
         });
 
-        // Fetch divisions
         const divisionsResponse = await api.get("/division", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,13 +92,11 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
     fetchData();
   }, [onDeleteSuccess]);
 
-  // Get division name by ID
   const getDivisionName = (divisionId: string) => {
     const division = divisions.find((d) => d._id === divisionId);
     return division ? division.name : divisionId;
   };
 
-  // Pagination logic
   const totalPages = Math.ceil(events.length / itemsPerPage);
   const paginatedEvents = events.slice(
     (currentPage - 1) * itemsPerPage,
@@ -153,23 +149,21 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
 
   return (
     <>
-      {/* Toast Notification */}
       {toast && (
         <div
           className={`fixed top-4 right-4 z-50 p-4 rounded-md shadow-md ${
             toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          } text-white`}
+          } text-white max-w-[90vw] text-sm sm:text-base`}
         >
           {toast.message}
         </div>
       )}
 
-      {/* Confirmation Dialog */}
       {showConfirm && (
         <div className="fixed inset-0 bg-black/10 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-md max-w-md w-full">
+          <div className="bg-white p-4 sm:p-6 rounded-md max-w-md w-[90vw]">
             <h3 className="text-lg font-medium mb-4">Confirm Deletion</h3>
-            <p className="mb-6">
+            <p className="mb-6 text-sm sm:text-base">
               Are you sure you want to delete this event? This action cannot be
               undone.
             </p>
@@ -180,14 +174,14 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                   setShowConfirm(false);
                   setItemToDelete(null);
                 }}
-                className="p-2 rounded-[10px] cursor-pointer"
+                className="p-2 rounded-[10px] cursor-pointer text-sm sm:text-base"
               >
                 Cancel
               </Button>
               <Button
                 variant="destructive"
                 onClick={handleDelete}
-                className="p-2 rounded-[10px] cursor-pointer"
+                className="p-2 rounded-[10px] cursor-pointer text-sm sm:text-base"
               >
                 Delete
               </Button>
@@ -196,27 +190,27 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
         </div>
       )}
 
-      <div className="border rounded-md">
-        <Table >
+      <div className="border rounded-md overflow-x-auto">
+        <Table className="min-w-[600px]">
           <TableHeader>
             <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Event Title</TableHead>
-              <TableHead>Visibility</TableHead>
-              <TableHead>Status</TableHead>
-              {currentUserRole !== "member" && <TableHead>Actions</TableHead>}
+              <TableHead className="text-sm sm:text-base">Date</TableHead>
+              <TableHead className="text-sm sm:text-base">Event Title</TableHead>
+              <TableHead className="text-sm sm:text-base">Visibility</TableHead>
+              <TableHead className="text-sm sm:text-base">Status</TableHead>
+              {currentUserRole !== "member" && <TableHead className="text-sm sm:text-base">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedEvents.map((event) => (
               <TableRow key={event._id}>
-                <TableCell className="font-medium">
+                <TableCell className="font-medium text-sm sm:text-base">
                   {formatDate(event.date)}
                 </TableCell>
-                <TableCell>{event.title}</TableCell>
+                <TableCell className="text-sm sm:text-base">{event.title}</TableCell>
                 <TableCell>
                   <Badge
-                    className={`${
+                    className={`text-xs sm:text-sm ${
                       event.visibility === "public"
                         ? "bg-green-50 text-green-500"
                         : "bg-red-50 text-red-500"
@@ -227,7 +221,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                 </TableCell>
                 <TableCell>
                   <Badge
-                    className={`${
+                    className={`text-xs sm:text-sm ${
                       event.status === "ended"
                         ? "bg-red-50 text-red-500"
                         : event.status === "planned"
@@ -244,7 +238,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="hover:text-red-500 cursor-pointer"
+                        className="hover:text-red-500 cursor-pointer h-8 w-8"
                         onClick={() => {
                           setItemToDelete(event._id);
                           setShowConfirm(true);
@@ -259,9 +253,9 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
             ))}
           </TableBody>
         </Table>
-        <div className="flex items-center justify-between px-4 py-2 border-t">
-          <div className="flex items-center">
-            <span className="text-sm text-gray-500">Showing</span>
+        <div className="flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-2 border-t gap-2 sm:gap-0">
+          <div className="flex items-center gap-2">
+            <span className="text-xs sm:text-sm text-gray-500">Showing</span>
             <Select
               value={itemsPerPage.toString()}
               onValueChange={(value) => {
@@ -278,7 +272,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span className="text-sm text-gray-500">
+            <span className="text-xs sm:text-sm text-gray-500">
               Showing {paginatedEvents.length} of {events.length} records
             </span>
           </div>
@@ -291,6 +285,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                     e.preventDefault();
                     if (currentPage > 1) setCurrentPage(currentPage - 1);
                   }}
+                  className="text-xs sm:text-sm"
                 />
               </PaginationItem>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
@@ -303,7 +298,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                         e.preventDefault();
                         setCurrentPage(page);
                       }}
-                      className="rounded-[8px]"
+                      className="rounded-[8px] text-xs sm:text-sm"
                     >
                       {page}
                     </PaginationLink>
@@ -318,6 +313,7 @@ export default function EventTable({ onDeleteSuccess }: EventTableProps) {
                     if (currentPage < totalPages)
                       setCurrentPage(currentPage + 1);
                   }}
+                  className="text-xs sm:text-sm"
                 />
               </PaginationItem>
             </PaginationContent>

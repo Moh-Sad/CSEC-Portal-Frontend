@@ -46,14 +46,10 @@ export default function EventList() {
 
   const formatEventDateTime = (dateString: string, timeString: string) => {
     try {
-      // Try ISO format first
       const isoDate = new Date(`${dateString}T${timeString}`)
       if (!isNaN(isoDate.getTime())) return isoDate
-      
-      // Fallback to parsing just the date part if time is invalid
       return parseISO(dateString)
     } catch {
-      // Final fallback to current date if parsing fails
       return new Date()
     }
   }
@@ -69,7 +65,7 @@ export default function EventList() {
         return (
           <Card key={event._id} className="border-t-0 border-r-0 border-b border-l-0 rounded-none shadow-none">
             <CardContent className="p-0">
-              <div className="flex justify-between items-start py-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start py-4 gap-2 sm:gap-0">
                 <div className="space-y-1">
                   <div className="flex items-center">
                     <div
@@ -81,17 +77,17 @@ export default function EventList() {
                             : "bg-blue-500"
                       }`}
                     ></div>
-                    <h3 className="text-lg font-medium">{event.title}</h3>
+                    <h3 className="text-base sm:text-lg font-medium">{event.title}</h3>
                   </div>
-                  <p className="text-sm text-gray-500">{event.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">{event.description}</p>
                   <div className="mt-2">
                     <Badge variant="outline" className="rounded-full text-xs">
                       {event.visibility === "public" ? "Public" : "Members"}
                     </Badge>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm">{timeLeft}</p>
+                <div className="text-left sm:text-right">
+                  <p className="text-xs sm:text-sm">{timeLeft}</p>
                   <p className="text-xs text-gray-500 mt-1">
                     Date: {isNaN(eventDate.getTime()) ? "Invalid date" : eventDate.toLocaleDateString()}
                   </p>

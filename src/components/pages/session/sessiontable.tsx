@@ -89,7 +89,6 @@ export default function SessionTable({
     fetchDivisions();
   }, [onDeleteSuccess]);
 
-  // Pagination logic
   const totalPages = Math.ceil(sessions.length / itemsPerPage);
   const paginatedSessions = sessions.slice(
     (currentPage - 1) * itemsPerPage,
@@ -152,23 +151,21 @@ export default function SessionTable({
 
   return (
     <>
-      {/* Toast Notification */}
       {toast && (
         <div
           className={`fixed top-4 right-4 z-50 p-4 rounded-md shadow-md ${
             toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          } text-white`}
+          } text-white max-w-[90vw] text-sm sm:text-base`}
         >
           {toast.message}
         </div>
       )}
 
-      {/* Confirmation Dialog */}
       {showConfirm && (
         <div className="fixed inset-0 bg-black/10 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-md max-w-md w-full">
+          <div className="bg-white p-4 sm:p-6 rounded-md max-w-md w-[90vw]">
             <h3 className="text-lg font-medium mb-4">Confirm Deletion</h3>
-            <p className="mb-6">
+            <p className="mb-6 text-sm sm:text-base">
               Are you sure you want to delete this session? This action cannot
               be undone.
             </p>
@@ -179,14 +176,14 @@ export default function SessionTable({
                   setShowConfirm(false);
                   setItemToDelete(null);
                 }}
-                className="p-2 rounded-[10px]"
+                className="p-2 rounded-[10px] text-sm sm:text-base"
               >
                 Cancel
               </Button>
               <Button
                 variant="destructive"
                 onClick={handleDelete}
-                className="p-2 rounded-[10px]"
+                className="p-2 rounded-[10px] text-sm sm:text-base"
               >
                 Delete
               </Button>
@@ -195,30 +192,30 @@ export default function SessionTable({
         </div>
       )}
 
-      <div className="border rounded-md">
-        <Table>
+      <div className="border rounded-md overflow-x-auto">
+        <Table className="min-w-[800px]">
           <TableHeader>
             <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Session Title</TableHead>
-              <TableHead>Division</TableHead>
-              <TableHead>Total groups</TableHead>
-              <TableHead>Status</TableHead>
-              {currentUserRole !== "member" && <TableHead>Actions</TableHead>}
+              <TableHead className="text-sm sm:text-base">Date</TableHead>
+              <TableHead className="text-sm sm:text-base">Session Title</TableHead>
+              <TableHead className="text-sm sm:text-base">Division</TableHead>
+              <TableHead className="text-sm sm:text-base">Total groups</TableHead>
+              <TableHead className="text-sm sm:text-base">Status</TableHead>
+              {currentUserRole !== "member" && <TableHead className="text-sm sm:text-base">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedSessions.map((session) => (
               <TableRow key={session._id}>
-                <TableCell className="font-medium">
+                <TableCell className="font-medium text-sm sm:text-base">
                   {formatDate(session.date)}
                 </TableCell>
-                <TableCell>{session.title}</TableCell>
-                <TableCell>{getDivisionName(session.division)}</TableCell>
-                <TableCell>{session.groups.length}</TableCell>
+                <TableCell className="text-sm sm:text-base">{session.title}</TableCell>
+                <TableCell className="text-sm sm:text-base">{getDivisionName(session.division)}</TableCell>
+                <TableCell className="text-sm sm:text-base">{session.groups.length}</TableCell>
                 <TableCell>
                   <Badge
-                    className={`${getStatusBadge(
+                    className={`text-xs sm:text-sm ${getStatusBadge(
                       session.status
                     )} hover:bg-opacity-80 capitalize`}
                   >
@@ -231,7 +228,7 @@ export default function SessionTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="hover:text-red-500 cursor-pointer"
+                        className="hover:text-red-500 cursor-pointer h-8 w-8"
                         onClick={() => {
                           setItemToDelete(session._id);
                           setShowConfirm(true);
@@ -246,9 +243,9 @@ export default function SessionTable({
             ))}
           </TableBody>
         </Table>
-        <div className="flex items-center justify-between px-4 py-2 border-t">
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">Showing</span>
+        <div className="flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-2 border-t gap-2 sm:gap-0">
+          <div className="flex items-center gap-2">
+            <span className="text-xs sm:text-sm text-gray-500">Showing</span>
             <Select
               value={itemsPerPage.toString()}
               onValueChange={(value) => {
@@ -265,7 +262,7 @@ export default function SessionTable({
                 <SelectItem value="50">50</SelectItem>
               </SelectContent>
             </Select>
-            <span className="text-sm text-gray-500">
+            <span className="text-xs sm:text-sm text-gray-500">
               Showing {paginatedSessions.length} of {sessions.length} records
             </span>
           </div>
@@ -278,6 +275,7 @@ export default function SessionTable({
                     e.preventDefault();
                     if (currentPage > 1) setCurrentPage(currentPage - 1);
                   }}
+                  className="text-xs sm:text-sm"
                 />
               </PaginationItem>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
@@ -290,7 +288,7 @@ export default function SessionTable({
                         e.preventDefault();
                         setCurrentPage(page);
                       }}
-                      className="rounded-[8px]"
+                      className="rounded-[8px] text-xs sm:text-sm"
                     >
                       {page}
                     </PaginationLink>
@@ -305,6 +303,7 @@ export default function SessionTable({
                     if (currentPage < totalPages)
                       setCurrentPage(currentPage + 1);
                   }}
+                  className="text-xs sm:text-sm"
                 />
               </PaginationItem>
             </PaginationContent>

@@ -55,32 +55,32 @@ export default function SessionAndEvent() {
 
   const currentUserRole = Cookies.get("role");
   return (
-    <div className="container mx-auto max-w-full p-4">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex space-x-2">
+    <div className="container mx-auto max-w-full p-2 sm:p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-4">
+        <div className="flex space-x-2 w-full sm:w-auto">
           <Button
             variant={view === "list" ? "none" : "none"}
-            className={`h-10 px-4 rounded-[8px] ${view === "list" ? "bg-[#003081] text-white" : "cursor-pointer"}`}
+            className={`h-10 px-3 sm:px-4 rounded-[8px] ${view === "list" ? "bg-[#003081] text-white" : "cursor-pointer"} text-sm sm:text-base`}
             onClick={() => setView("list")}
           >
-            <List className="h-4 w-4 mr-2" />
+            <List className="h-4 w-4 mr-1 sm:mr-2" />
             List
           </Button>
           <Button
             variant={view === "table" ? "none" : "none"}
-            className={`h-10 px-4 rounded-[8px] ${view === "table" ? "bg-[#003081] text-white" : "cursor-pointer"}`}
+            className={`h-10 px-3 sm:px-4 rounded-[8px] ${view === "table" ? "bg-[#003081] text-white" : "cursor-pointer"} text-sm sm:text-base`}
             onClick={() => setView("table")}
           >
-            <Table2 className="h-4 w-4 mr-2" />
+            <Table2 className="h-4 w-4 mr-1 sm:mr-2" />
             Table
           </Button>
         </div>
-        <div className="flex justify-center space-x-2">
-        {currentUserRole !== "member" && (
-          <Button className="bg-[#003081] text-white rounded-[8px] hover:bg-[#002f8775] cursor-pointer h-10 px-2" onClick={() => setShowAddForm(true)}>
-            <MdAddCircleOutline className="h-4 w-4" />
-            Create {type === "event" ? "Event" : "Session"}
-          </Button>
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-2 w-full sm:w-auto">
+          {currentUserRole !== "member" && (
+            <Button className="bg-[#003081] text-white rounded-[8px] hover:bg-[#002f8775] cursor-pointer h-10 px-2 sm:px-3 text-sm sm:text-base" onClick={() => setShowAddForm(true)}>
+              <MdAddCircleOutline className="h-4 w-4 mr-1 sm:mr-1" />
+              <span className="whitespace-nowrap">Create {type === "event" ? "Event" : "Session"}</span>
+            </Button>
           )}
           <Select
             value={type}
@@ -89,7 +89,7 @@ export default function SessionAndEvent() {
               setShowAddForm(false)
             }}
           >
-            <SelectTrigger className="w-[130px] h-10">
+            <SelectTrigger className="w-full sm:w-[130px] h-10">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
