@@ -102,7 +102,7 @@ export default function AddEventForm({ onCancel, onSuccess }: AddEventFormProps)
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg border max-w-2xl mx-auto relative">
+    <div className="p-6 rounded-lg border max-w-2xl mx-auto relative">
       <h2 className="text-xl font-bold mb-6">Add New Event</h2>
 
       {/* Toast Notification */}
@@ -134,7 +134,7 @@ export default function AddEventForm({ onCancel, onSuccess }: AddEventFormProps)
               placeholder="Enter event description" 
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-70"
+              className="md:w-70 w-auto"
             />
           </div>
 

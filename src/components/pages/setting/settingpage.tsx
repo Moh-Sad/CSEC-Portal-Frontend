@@ -92,21 +92,21 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className={`flex flex-col h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
+    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
       {/* Settings content */}
-      <div className="p-4 mx-3 flex-1 overflow-auto">
+      <div className="p-4 mx-auto w-full max-w-2xl flex-1 overflow-auto">
         <div className="w-full">
           {/* Appearance Setting with Theme button */}
           <div className={`py-4 border-b ${theme === 'dark' ? 'border-gray-700' : ''} flex justify-between items-center`}>
-            <div>
-              <h3 className="font-medium mb-1">Appearance</h3>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
+            <div className="flex-1 pr-4">
+              <h3 className="font-medium mb-1 text-base sm:text-lg">Appearance</h3>
+              <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
                 Customise how your theme looks on your device
               </p>
             </div>
             <div className="ml-4">
               <button 
-                className={`${theme === 'dark' ? 'bg-gray-700 text-white' : ''} text-xs px-3 py-1 rounded flex items-center`}
+                className={`${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100'} text-xs sm:text-sm px-3 py-1.5 rounded flex items-center`}
                 onClick={toggleTheme}
               >
                 {theme === 'light' ? 'Light' : 'Dark'}
@@ -117,9 +117,9 @@ export default function SettingsPage() {
 
           {/* Calendar Setting */}
           <div className={`hidden py-4 border-b ${theme === 'dark' ? 'border-gray-700' : ''} flex justify-between items-center`}>
-            <div>
-              <h3 className="font-medium mb-1">Automatically Add Sessions to Calendar</h3>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
+            <div className="flex-1 pr-4">
+              <h3 className="font-medium mb-1 text-base sm:text-lg">Automatically Add Sessions to Calendar</h3>
+              <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
                 Save time by auto-adding sessions to your calendar, or manually enter them for more control.
               </p>
             </div>
@@ -143,9 +143,9 @@ export default function SettingsPage() {
 
           {/* Phone Privacy Setting */}
           <div className={`py-4 ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} flex justify-between items-center`}>
-            <div>
-              <h3 className="font-medium mb-1">Make your Phone Public</h3>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
+            <div className="flex-1 pr-4">
+              <h3 className="font-medium mb-1 text-base sm:text-lg">Make your Phone Public</h3>
+              <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
                 Keep your phone private for safety, or share it for convenience.
               </p>
             </div>

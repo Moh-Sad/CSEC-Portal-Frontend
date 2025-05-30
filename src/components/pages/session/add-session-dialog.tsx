@@ -141,8 +141,8 @@ export default function AddSessionForm({ onCancel, onSuccess }: AddSessionFormPr
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="p-5 w-140 h-90 border-1 border-gray-300 rounded-[8px]">
-        <div className="grid grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="p-6 rounded-lg border max-w-2xl mx-auto relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Label htmlFor="title">Title</Label>
             <Input
@@ -183,11 +183,11 @@ export default function AddSessionForm({ onCancel, onSuccess }: AddSessionFormPr
             placeholder="Enter session description"
             value={formData.description}
             onChange={(e: { target: { value: any } }) => setFormData({...formData, description: e.target.value})}
-            className="w-70"
+            className="md:w-70 w-auto"
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col gap-2">
           <div className="space-y-2">
             <Label htmlFor="date">Date</Label>
             <Input

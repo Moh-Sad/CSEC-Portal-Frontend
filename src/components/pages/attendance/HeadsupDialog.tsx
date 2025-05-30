@@ -106,7 +106,7 @@ export function HeadsupDialog({ memberId, sessionId }: HeadsUpDialogProps) {
         <div className={`
           fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg
           ${toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white
-          animate-fade-in-out
+          animate-fade-in-out max-w-[90vw] text-sm sm:text-base
         `}>
           {toast.message}
         </div>
@@ -124,14 +124,14 @@ export function HeadsupDialog({ memberId, sessionId }: HeadsUpDialogProps) {
             </div>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-auto h-auto p-4 overflow-hidden">
+        <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-4 overflow-hidden">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">Heads Up</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col space-y-3">
             <div className="space-y-2">
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="flex w-70 h-11 px-3 py-6 border-1 border-gray-300 rounded-[8px]">
+                <SelectTrigger className="flex w-full h-11 px-3 py-6 border-1 border-gray-300 rounded-[8px]">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -149,7 +149,7 @@ export function HeadsupDialog({ memberId, sessionId }: HeadsUpDialogProps) {
                 placeholder="Enter a reason"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="flex w-70 h-18 px-3 py-2 border-1 border-gray-300 rounded-[8px] placeholder-gray-500"
+                className="flex w-full min-h-[120px] px-3 py-2 border-1 border-gray-300 rounded-[8px] placeholder-gray-500"
               />
             </div>
 
@@ -157,39 +157,35 @@ export function HeadsupDialog({ memberId, sessionId }: HeadsUpDialogProps) {
               <div className="text-red-500 text-sm">{error}</div>
             )}
 
-            <div className="flex justify-center items-center gap-3">
-              <div className="flex gap-3 items-center justify-center">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => {
-                    setOpen(false);
-                    setSelectedType("");
-                    setReason("");
-                    setError("");
-                  }}
-                  className="flex h-10 w-35 rounded-md items-center justify-center bg-[#34495E0D] cursor-pointer hover:bg-[#48637e0d]"
-                  aria-label="Cancel"
-                  disabled={loading}
-                >
-                  <h3 className="ml-1">Cancel</h3>
-                </Button>
-              </div>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => {
+                  setOpen(false);
+                  setSelectedType("");
+                  setReason("");
+                  setError("");
+                }}
+                className="flex h-10 w-full sm:w-35 rounded-md items-center justify-center bg-[#34495E0D] cursor-pointer hover:bg-[#48637e0d]"
+                aria-label="Cancel"
+                disabled={loading}
+              >
+                <h3 className="ml-1">Cancel</h3>
+              </Button>
 
-              <div className="flex gap-5 items-center justify-center">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleSubmit}
-                  className="flex h-10 w-35 rounded-md items-center justify-center bg-[#003087] cursor-pointer hover:bg-[#002f87a2]"
-                  aria-label="Add"
-                  disabled={loading}
-                >
-                  <h3 className="text-[#F8F8F8] ml-1">
-                    {loading ? "Submitting..." : "Add"}
-                  </h3>
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleSubmit}
+                className="flex h-10 w-full sm:w-35 rounded-md items-center justify-center bg-[#003087] cursor-pointer hover:bg-[#002f87a2]"
+                aria-label="Add"
+                disabled={loading}
+              >
+                <h3 className="text-[#F8F8F8] ml-1">
+                  {loading ? "Submitting..." : "Add"}
+                </h3>
+              </Button>
             </div>
           </div>
         </DialogContent>
