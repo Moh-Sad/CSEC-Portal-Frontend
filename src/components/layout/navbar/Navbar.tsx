@@ -79,16 +79,13 @@ export default function Navbar({ time }: NavbarProps) {
   };
 
   const handleBreadcrumbClick = (path: string, isRoot: boolean = false) => {
-    // Preserve all existing query parameters
     const queryString = searchParams.toString();
     const queryPrefix = queryString ? `?${queryString}` : '';
 
     if (isRoot) {
-      // Navigate to the root path of the current section with preserved query params
       const rootPath = path.split('/').slice(0, 3).join('/');
       router.push(`${rootPath}${queryPrefix}`);
     } else {
-      // For non-root breadcrumbs, go back to the parent path with preserved query params
       const parentPath = path.split('/').slice(0, -1).join('/') || '/';
       router.push(`${parentPath}${queryPrefix}`);
     }
@@ -103,24 +100,24 @@ export default function Navbar({ time }: NavbarProps) {
 
     if (pathSegments.length === 0) {
       return (
-        <>
-          <h1 className="text-lg font-semibold">{baseTitle}</h1>
+        <div className="flex flex-col">
+          <h1 className="text-base sm:text-lg font-semibold">{baseTitle}</h1>
           <h3 
-            className="text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer" 
+            className="text-xs sm:text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer" 
             onClick={() => handleBreadcrumbClick(pathname, true)}
           >
             {baseSubtitle}
           </h3>
-        </>
+        </div>
       );
     }
 
     return (
-      <>
-        <h1 className="text-lg font-semibold">{baseTitle}</h1>
-        <div className="flex gap-2 items-center">
+      <div className="flex flex-col">
+        <h1 className="text-base sm:text-lg font-semibold">{baseTitle}</h1>
+        <div className="flex flex-wrap gap-1 sm:gap-2 items-center">
           <h3 
-            className="text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer" 
+            className="text-xs sm:text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer" 
             onClick={() => handleBreadcrumbClick(pathname, true)}
           >
             {baseSubtitle}
@@ -128,10 +125,10 @@ export default function Navbar({ time }: NavbarProps) {
           {pathSegments.map((segment, index) => {
             const isLast = index === pathSegments.length - 1;
             return (
-              <div key={index} className="flex items-center gap-2">
-                <FaAngleRight color="gray" size={13} className="mt-1" />
+              <div key={index} className="flex items-center gap-1 sm:gap-2">
+                <FaAngleRight color="gray" size={11} className="mt-0.5 sm:mt-1" />
                 <h3 
-                  className={`text-sm text-gray-600 capitalize ${!isLast ? 'hover:text-gray-800 hover:cursor-pointer' : ''}`}
+                  className={`text-xs sm:text-sm text-gray-600 capitalize ${!isLast ? 'hover:text-gray-800 hover:cursor-pointer' : ''}`}
                   onClick={!isLast ? () => handleBreadcrumbClick(pathname) : undefined}
                 >
                   {segment.replace(/-/g, " ")}
@@ -140,7 +137,7 @@ export default function Navbar({ time }: NavbarProps) {
             );
           })}
         </div>
-      </>
+      </div>
     );
   };
 
@@ -151,19 +148,19 @@ export default function Navbar({ time }: NavbarProps) {
         .replace(/^\//, "");
       if (subPath === "profile" && memberDisplayName) {
         return (
-          <>
-            <h1 className="text-lg font-semibold">All Members</h1>
-            <div className="flex gap-2">
+          <div className="flex flex-col">
+            <h1 className="text-base sm:text-lg font-semibold">All Members</h1>
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               <h3 
-                className="text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer"
+                className="text-xs sm:text-sm text-gray-600 hover:text-gray-800 hover:cursor-pointer"
                 onClick={() => router.push(`/dashboard/allmembers?${searchParams.toString()}`)}
               >
                 All Members Information
               </h3>
-              <FaAngleRight color="gray" size={13} className="mt-1" />
-              <h3 className="text-sm text-gray-600">{memberDisplayName}</h3>
+              <FaAngleRight color="gray" size={11} className="mt-0.5 sm:mt-1" />
+              <h3 className="text-xs sm:text-sm text-gray-600">{memberDisplayName}</h3>
             </div>
-          </>
+          </div>
         );
       }
       return renderBreadcrumbs(
@@ -212,31 +209,30 @@ export default function Navbar({ time }: NavbarProps) {
       return renderBreadcrumbs("Settings", "All Settings", subPath);
     } else {
       return (
-        <>
-          <div className="flex gap-1">
-            <h1 className="text-lg font-semibold">Hello {fname}</h1>
+        <div className="items-center gap-2">
+          <div className="flex gap-1 items-center">
+            <h1 className="text-base sm:text-lg font-semibold">Hello {fname}</h1>
             <Image
               src={ShakeHand}
               alt="Handshake icon"
-              width={25}
-              height={25}
+              width={20}
+              height={20}
+              className="w-4 h-4 sm:w-6 sm:h-6"
             />
           </div>
-          <h3 className="text-sm text-gray-600">Good {getTimeOfDay()}</h3>
-        </>
+          <h3 className="text-xs sm:text-sm text-gray-600 sm:block">Good {getTimeOfDay()}</h3>
+        </div>
       );
     }
   };
 
   return (
-    <div className="flex md:flex-row h-auto md:h-20 w-full mr-3 justify-between items-start md:items-center p-2 gap-2">
-      <div className="pl-1 w-full md:w-auto">
-        <div className="flex flex-col md:flex-row gap-2 md:gap-3">
-          <div>{getGreeting()}</div>
-        </div>
+    <div className="flex justify-between items-center w-full p-2 sm:p-3 gap-2 sm:gap-4">
+      <div className="flex items-center gap-4">
+        {getGreeting()}
       </div>
-  
-      <div className="flex gap-3 w-full md:w-auto justify-end md:justify-center items-center">
+      
+      <div className="flex items-center">
         <DropDownMenu />
       </div>
     </div>
