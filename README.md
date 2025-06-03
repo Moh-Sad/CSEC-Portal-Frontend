@@ -33,44 +33,43 @@ A rule-based portal for the Computer Science and Engineering Club (CSEC) at ASTU
 
 |Login Preview |
 |-------------------|
-| ![Login](https://via.placeholder.com/600x400) |
+| ![Login](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Login.png) |
 
 |Dashboard Preview |
 |-------------------|
-| ![Dashboard](https://via.placeholder.com/600x400) |
+| ![Dashboard](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/dashboard.png) |
 
 
 |Allmembers Preview |
 |-------------------|
-| ![Allmembers](https://via.placeholder.com/600x400) |
-
+| ![Allmembers](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Allmembers.png) |
 
 |Alldivisions Preview |
 |-------------------|
-| ![Alldivisions](https://via.placeholder.com/600x400) |
+| ![Alldivisions](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Alldivision.png) |
 
 
 |Attendance Preview |
 |-------------------|
-| ![Attendance](https://via.placeholder.com/600x400) |
+| ![Attendance](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Attendance.png) |
 
 
 |Session & Event Preview |
 |-------------------|
-| ![Session & Event](https://via.placeholder.com/600x400) |
+| ![Session & Event](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/session&event.png) |
 
 
 |Resources Preview |
 |-------------------|
-| ![Resources](https://via.placeholder.com/600x400) |
+| ![Resources](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Resources.png) |
 
 |Profile Preview |
 |-------------------|
-| ![Profile](https://via.placeholder.com/600x400) |
+| ![Profile](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Profile.png) |
 
 |Administration Preview |
 |-------------------|
-| ![Administration](https://via.placeholder.com/600x400) |
+| ![Administration](https://github.com/Moh-Sad/CSEC-Portal-Frontend/blob/dev/public/screenshoots/Administration.png) |
 
 ## 🌐 Live Demo
 
