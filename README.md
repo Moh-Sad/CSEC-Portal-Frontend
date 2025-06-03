@@ -1,7 +1,5 @@
 # CSEC Portal - Frontend
 
-[![CSEC ASTU Logo](https://via.placeholder.com/150)](https://github.com/Moh-Sad/CSEC-Portal-Frontend) <!-- Replace with actual logo -->
-
 A rule-based portal for the Computer Science and Engineering Club (CSEC) at ASTU, featuring hierarchical access control and member management.
 
 ## 🛠 Technologies Used
