@@ -39,7 +39,7 @@ export default function FAQ() {
         <h1 className="text-4xl font-bold text-center text-[#003087] mb-8 mt-5">
           Contact Us
         </h1>
-        <div className="flex md:flex-row flex-col justify-between">
+        <div className="flex md:flex-row flex-col justify-between gap-3">
           <MohammedCard />
           <MaheletCard />
           <HussienCard />
