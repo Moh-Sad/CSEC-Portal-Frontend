@@ -22,6 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import Link from "next/link";
 
 export function LoginForm() {
   const router = useRouter();
@@ -215,21 +216,21 @@ export function LoginForm() {
                 Want to Explore?!
               </h1>
               <div>
-                <p className="font-semibold">Role President:</p>
+                <p className="font-semibold">President:</p>
                 <p>Email: kiyakebe799@gmail.com</p>
                 <p>Password: 12345678</p>
               </div>
               <div>
-                <p className="font-semibold">Role Divison Head:</p>
+                <p className="font-semibold">Divison Head:</p>
                 <p>Email: mohsad.7676@gmail.com</p>
                 <p>Password: 12345678</p>
               </div>
               <div>
-                <p className="font-semibold">Role member:</p>
+                <p className="font-semibold">Member:</p>
                 <p>Email: user1@example.com</p>
                 <p>Password: 12345678</p>
               </div>
-              <p className="flex justify-end text-[#003087] cursor-pointer">Need to know more!</p>
+              <Link href={'/FAQs'} className="flex justify-end text-[#003087] cursor-pointer">Need to know more!</Link>
             </div>
           </PopoverContent>
         </Popover>
