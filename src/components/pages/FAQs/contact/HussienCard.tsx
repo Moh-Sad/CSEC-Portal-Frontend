@@ -5,19 +5,19 @@ import TelegramIcon from "@/components/icons/telegram.png";
 import LinkedinIcon from "@/components/icons/linkedin.png";
 import GmailIcon from "@/components/icons/gmail.png";
 
-export default function MohammedCard() {
+export default function HussienCard() {
   return (
     <div>
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm mx-auto">
         <div className="flex justify-center my-2">
           <Avatar className="w-24 h-24 rounded-full">
             <AvatarImage src="#" />
-            <AvatarFallback className="text-3xl">MY</AvatarFallback>
+            <AvatarFallback className="text-3xl">HB</AvatarFallback>
           </Avatar>
         </div>
-        <h2 className="text-2xl font-bold text-center mb-2">Mahelet Yared</h2>
+        <h2 className="text-2xl font-bold text-center mb-2">Hussien Beshir</h2>
         <p className="text-gray-700 mb-2">
-          Front -end Developer, React & Next.js Expert
+          Back-End Developer, Node.js & Express Expert
         </p>
         <ul className="flex justify-between my-2 p-2">
           <li>

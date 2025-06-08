@@ -4,12 +4,13 @@ import DivisionHeadCard from "@/components/pages/FAQs/roles/DivisionHeadCard";
 import MemberCard from "@/components/pages/FAQs/roles/MemberCard";
 import MohammedCard from "@/components/pages/FAQs/contact/MohammedCard";
 import MaheletCard from "@/components/pages/FAQs/contact/MaheletCard";
+import HussienCard from "@/components/pages/FAQs/contact/HussienCard";
 
 export default function FAQ() {
   return (
     <>
       <div className="flex items-center justify-end p-4">
-        <button className="h-10 w-20 rounded-[8px] bg-[#003087] text-white flex items-center justify-center cursor-pointer hover:bg-[#003087]/80 transition-colors duration-300">
+        <button className="mt-5 mr-5 h-10 w-20 rounded-[8px] bg-[#003087] text-white font-semibold flex items-center justify-center cursor-pointer hover:bg-[#003087]/80 transition-colors duration-300">
           Login
         </button>
       </div>
@@ -27,9 +28,10 @@ export default function FAQ() {
         <h1 className="text-4xl font-bold text-center text-[#003087] mb-8 mt-5">
           Contact Us
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex justify-between">
           <MohammedCard />
           <MaheletCard />
+          <HussienCard />
         </div>
       </div>
     </>
