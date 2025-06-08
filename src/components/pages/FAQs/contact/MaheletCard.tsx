@@ -21,7 +21,7 @@ export default function MohammedCard() {
         </p>
         <ul className="flex justify-between my-2 p-2">
           <li>
-            <a href="#">
+            <a href="mailto:mahelet2130@gmail.com" target="_blank">
               <Image
                 src={GmailIcon}
                 alt="Gmail Icon"
@@ -41,7 +41,7 @@ export default function MohammedCard() {
           </li>
 
           <li>
-            <a href="#">
+            <a href="https://t.me/Kalkias" target="_blank">
               <Image
                 src={TelegramIcon}
                 alt="Telegram Icon"
@@ -51,7 +51,7 @@ export default function MohammedCard() {
           </li>
 
           <li>
-            <a href="#">
+            <a href="https://www.linkedin.com/in/mahelet-yared-539682369?trk=contact-info" target="_blank">
               <Image
                 src={LinkedinIcon}
                 alt="LinkedIn Icon"
