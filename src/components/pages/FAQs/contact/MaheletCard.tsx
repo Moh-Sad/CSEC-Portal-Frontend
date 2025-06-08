@@ -17,7 +17,7 @@ export default function MohammedCard() {
         </div>
         <h2 className="text-2xl font-bold text-center mb-2">Mahelet Yared</h2>
         <p className="text-gray-700 mb-2">
-          Front -end Developer, React & Next.js Expert
+          Front-end Developer, React & Next.js Expert
         </p>
         <ul className="flex justify-between my-2 p-2">
           <li>
