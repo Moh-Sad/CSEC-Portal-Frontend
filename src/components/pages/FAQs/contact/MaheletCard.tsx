@@ -31,7 +31,8 @@ export default function MohammedCard() {
           </li>
 
           <li>
-            <a href="#">
+            <a href="
+            https://wa.me/251924448171" target="_blank">
               <Image
                 src={WhatsappIcon}
                 alt="Whatsapp Icon"
