@@ -32,6 +32,7 @@ interface TableFilterProps {
   saveButton?: boolean;
   saveButtonDisabled?: boolean;
   saveButtonText?: string;
+  filterButton?: boolean;
   onMemberAdded?: () => void;
   divisions?: string[];
 }
@@ -45,10 +46,12 @@ export function TableFilter({
   addMembersButton = false,
   saveButton = false,
   saveButtonDisabled = false,
+  filterButton = true,
   saveButtonText = "Save",
   placeholder = "Search",
   onMemberAdded,
   divisions = [],
+
 }: TableFilterProps) {
   const [searchValue, setSearchValue] = useState("");
   const [selectedDivisions, setSelectedDivisions] = useState<string[]>([]);
@@ -130,6 +133,7 @@ export function TableFilter({
         {addMembersButton && onMemberAdded && (
           <AddMemberDialog onMemberAdded={onMemberAdded} />
         )}
+        {filterButton && (
         <Popover>
           <PopoverTrigger asChild>
             <div className="flex justify-center border-1 border-gray-300 rounded-[8px] h-12 w-23 items-center cursor-pointer hover:bg-accent/80 transition duration-200 ease-in-out">
@@ -268,7 +272,7 @@ export function TableFilter({
               </div>
             </div>
           </PopoverContent>
-        </Popover>
+        </Popover>)}
       </div>
     </div>
   );

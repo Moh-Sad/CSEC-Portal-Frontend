@@ -106,7 +106,7 @@ export default function AttendanceList() {
 
   if (loading) {
     return (
-      <div className="w-full h-screen pl-2 overflow-y-scroll scrollbar-custom">
+      <div className="w-full pl-2 overflow-y-scroll scrollbar-custom">
         <div className="space-y-4">
           {[...Array(4)].map((_, index) => (
             <div key={index} className="animate-pulse p-4 border rounded-lg">
@@ -127,7 +127,7 @@ export default function AttendanceList() {
 
   return (
     <div className="w-full pl-2">
-      <div className="space-y-2 h-110 overflow-y-scroll scrollbar-custom">
+      <div className="space-y-2 h-[calc(100vh-200px)] sm:h-110 overflow-y-scroll scrollbar-custom">
         {sessions.map((session) => (
           <AttendanceCard
             key={session._id}

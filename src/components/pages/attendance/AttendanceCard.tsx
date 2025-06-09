@@ -31,12 +31,12 @@ export default function AttendanceCard({
       : "bg-yellow-50 text-yellow-500";
 
   return (
-    <div className="rounded-lg border border-gray-300 p-6 mb-4 w-[98%]">
-      <div className="flex justify-between items-start mb-3">
-        <div>
-          <div className="flex gap-5">
+    <div className="rounded-lg border border-gray-300 p-4 sm:p-6 mb-4 w-full sm:w-[98%]">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-3">
+        <div className="flex-1">
+          <div className="flex flex-col sm:flex-row sm:gap-5">
             <span
-              className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${statusColor} mb-2`}
+              className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${statusColor} mb-2 sm:mb-0 w-fit`}
             >
               {status}
             </span>
@@ -46,7 +46,7 @@ export default function AttendanceCard({
           <p className="text-xs text-gray-500 mt-1">{date}</p>
         </div>
         <button 
-          className="flex items-center h-7 space-x-1 bg-[#003087] text-white text-xs px-3 py-3 rounded-[8px] cursor-pointer" 
+          className="flex items-center justify-center h-7 space-x-1 bg-[#003087] text-white text-xs px-3 py-3 rounded-[8px] cursor-pointer w-full sm:w-auto" 
           onClick={handleAttendanceClick}
         >
           <MdAddCircleOutline className="h-4 w-4" />
