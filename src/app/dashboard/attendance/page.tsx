@@ -2,8 +2,11 @@
 
 import { TableFilter } from "@/components/common/TableFilter";
 import AttendanceList from "@/components/pages/attendance/AttendanceList";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function Attendance() {
+  const isMobile = useMediaQuery("(max-width: 640px)"); 
+  
   // handlers
   const handleSearch = (value: string) => {
     console.log("Searching for:", value);
@@ -24,6 +27,7 @@ export default function Attendance() {
             onFilter={handleFilter}
             placeholder="Search members..."
             className="w-full sm:w-[98%] pl-2"
+            filterButton={!isMobile}
           />
           <div>
             {/* Table */}

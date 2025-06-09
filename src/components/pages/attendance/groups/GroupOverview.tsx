@@ -125,28 +125,28 @@ export default function GroupOverview({ linkText = "View All" }: { linkText?: st
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#003087]"></div>
+      <div className="flex justify-center items-center h-40 sm:h-64">
+        <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#003087]"></div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="p-4 text-center text-red-500">{error}</div>;
+    return <div className="p-2 sm:p-4 text-center text-xs sm:text-sm text-red-500">{error}</div>;
   }
 
   if (groups.length === 0) {
-    return <div className="p-4 text-center">No groups found for this session</div>;
+    return <div className="p-2 sm:p-4 text-center text-xs sm:text-sm">No groups found for this session</div>;
   }
 
   return (
     <div>
-      <div className="flex flex-wrap gap-4 w-full">
+      <div className="flex flex-wrap gap-2 sm:gap-4 w-full">
         {groups.map((group) => (
           <GroupCardComponents
             key={group.id}
             division={group}
-            className="flex-1 min-w-[calc(50%-1.5rem)]"
+            className="flex-1 min-w-full sm:min-w-[calc(50%-1.5rem)]"
             linkText={linkText}
           />
         ))}
