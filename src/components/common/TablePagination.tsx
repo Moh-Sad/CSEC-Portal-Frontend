@@ -77,28 +77,17 @@ export function TablePagination({
   const handleItemsPerPageChange = (value: string) => {
     if (onItemsPerPageChange) {
       onItemsPerPageChange(Number(value));
-      onPageChange(1); // Reset to first page when changing items per page
+      onPageChange(1);
     }
   };
 
   return (
-    <div className={cn("p-3 flex items-center justify-between text-sm", className)}>
-      <div className="flex w-full">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="flex gap-3">
-              <div className="flex w-full justify-center items-center">
-                Showing ...
-              </div>
-            </div>
-          </DropdownMenuTrigger>
-        </DropdownMenu>
-      </div>
-
-      <div className="flex w-full">
+    <div className={cn("p-2 sm:p-3 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm gap-2 sm:gap-0", className)}>
+      <div className="flex w-full justify-center sm:justify-start order-2 sm:order-1">
         Showing {startItem} to {endItem} of {totalItems} records
       </div>
-      <Pagination>
+
+      <Pagination className="order-1 sm:order-2">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -107,7 +96,7 @@ export function TablePagination({
                 e.preventDefault();
                 if (currentPage > 1) onPageChange(currentPage - 1);
               }}
-              className={currentPage === 1 ? "pointer-events-none" : ""}
+              className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             />
           </PaginationItem>
 
@@ -123,7 +112,7 @@ export function TablePagination({
             return (
               <PaginationItem key={`page-${page}`} className="border-1 border-[#003087] rounded-[8px]">
                 <PaginationLink
-                  className="text-[#003087]"
+                  className="text-[#003087] text-xs sm:text-sm"
                   href="#"
                   isActive={currentPage === page}
                   onClick={(e) => {
@@ -144,7 +133,7 @@ export function TablePagination({
                 e.preventDefault();
                 if (currentPage < totalPages) onPageChange(currentPage + 1);
               }}
-              className={currentPage === totalPages ? "pointer-events-none" : ""}
+              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             />
           </PaginationItem>
         </PaginationContent>

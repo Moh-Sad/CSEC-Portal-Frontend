@@ -89,18 +89,18 @@ export default function AttendanceTable({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#003087]"></div>
+      <div className="flex justify-center items-center h-40 sm:h-64">
+        <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-t-2 border-b-2 border-[#003087]"></div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="py-4 text-center text-red-500">{error}</div>;
+    return <div className="py-3 sm:py-4 text-center text-xs sm:text-sm text-red-500">{error}</div>;
   }
 
   if (members.length === 0) {
-    return <div className="py-4 text-center">No members found in this group</div>;
+    return <div className="py-3 sm:py-4 text-center text-xs sm:text-sm">No members found in this group</div>;
   }
 
   return (
@@ -109,23 +109,23 @@ export default function AttendanceTable({
         const { fullName, profilePicture, initials } = getMemberDisplayInfo(member);
 
         return (
-          <div key={member._id} className="grid grid-cols-3 gap-4 py-4 text-sm">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-8 w-8">
+          <div key={member._id} className="grid grid-cols-1 xs:grid-cols-3 gap-2 sm:gap-4 py-3 sm:py-4 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 sm:gap-3 col-span-1 xs:col-span-1">
+              <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
                 <AvatarImage
                   src={profilePicture || "/placeholder.svg"}
                   alt={fullName}
                 />
-                <AvatarFallback>{initials}</AvatarFallback>
+                <AvatarFallback className="text-xs sm:text-sm">{initials}</AvatarFallback>
               </Avatar>
-              <span>{fullName}</span>
+              <span className="truncate">{fullName}</span>
             </div>
-            <div className="flex items-center justify-end gap-4">
+            <div className="flex items-center justify-start xs:justify-end gap-2 sm:gap-4 col-span-1 xs:col-span-1">
               <button
                 className={
                   pendingAttendance[member._id] === "present"
-                    ? "bg-green-500 text-white px-3 py-[2px] rounded-2xl"
-                    : "border-1 border-gray-300 px-3 py-[2px] rounded-2xl"
+                    ? "bg-green-500 text-white px-2 sm:px-3 py-[1px] sm:py-[2px] rounded-2xl text-xs sm:text-sm"
+                    : "border-1 border-gray-300 px-2 sm:px-3 py-[1px] sm:py-[2px] rounded-2xl text-xs sm:text-sm"
                 }
                 onClick={() => handleAttendanceChange(member._id, "present")}
               >
@@ -134,15 +134,15 @@ export default function AttendanceTable({
               <button
                 className={
                   pendingAttendance[member._id] === "absent"
-                    ? "bg-red-500 text-white px-3 py-[2px] rounded-2xl"
-                    : "border-1 border-gray-300 px-3 py-[2px] rounded-2xl"
+                    ? "bg-red-500 text-white px-2 sm:px-3 py-[1px] sm:py-[2px] rounded-2xl text-xs sm:text-sm"
+                    : "border-1 border-gray-300 px-2 sm:px-3 py-[1px] sm:py-[2px] rounded-2xl text-xs sm:text-sm"
                 }
                 onClick={() => handleAttendanceChange(member._id, "absent")}
               >
                 Absent
               </button>
             </div>
-            <div className="flex justify-end pr-10">
+            <div className="flex justify-start xs:justify-end pr-0 sm:pr-10 col-span-1 xs:col-span-1">
               <HeadsupDialog memberId={member._id} sessionId={sessionId || undefined} />
             </div>
           </div>
