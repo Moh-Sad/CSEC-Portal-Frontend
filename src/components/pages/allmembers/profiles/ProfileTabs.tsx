@@ -11,23 +11,22 @@ export function ProfileTabs() {
   const [activeTab, setActiveTab] = useState("required");
 
   return (
-      <div className="flex-1">
         <Tabs
           defaultValue="required"
           value={activeTab}
           onValueChange={setActiveTab}
-          className="w-180 py-2"
+          className="w-full py-2"
         >
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="required" className="flex items-start gap-2">
+            <TabsTrigger value="required" className="flex items-start gap-2 w-full">
               <FileText className="h-5 w-5 my-2"/>
               <span className="p-1">Required Information</span>
             </TabsTrigger>
-            <TabsTrigger value="optional" className="flex items-start gap-2">
+            <TabsTrigger value="optional" className="flex items-start gap-2 w-full">
               <User className="h-5 w-5 my-2"/>
               <span className="p-1">Optional Information</span>
             </TabsTrigger>
-            <TabsTrigger value="resources" className="flex items-start gap-2">
+            <TabsTrigger value="resources" className="flex items-start gap-2 w-full">
               <BookOpen className="h-5 w-5 my-2"/>
               <span className="p-1">Resources</span>
             </TabsTrigger>
@@ -42,6 +41,5 @@ export function ProfileTabs() {
             <Resources />
           </TabsContent>
         </Tabs>
-      </div>
   );
 }

@@ -88,65 +88,73 @@ export function TableFilter({
   }
 
   return (
-    <div className={cn("flex justify-between items-center", className)}>
-      <div className="flex justify-center gap-1 p-2 border-1 border-gray-300 rounded-[8px] h-12 items-center focus:outline-blue-600 focus:border-blue-600 w-50 sm:w-auto">
-        <LuSearch size={23} />
-        <div>
+    <div className={cn("flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3", className)}>
+      <div className="flex justify-center gap-1 p-2 border border-gray-300 rounded-[8px] h-12 items-center focus-within:outline-blue-600 focus-within:border-blue-600 w-full sm:w-auto sm:min-w-[250px] lg:min-w-[300px]">
+        <LuSearch size={20} className="flex-shrink-0" />
+        <div className="flex-1">
           <Input
             type="text"
             placeholder={placeholder}
-            className="outline-none border-0 shadow-none focus:outline-0 focus:border-0 focus:shadow-none"
+            className="outline-none border-0 shadow-none focus:outline-0 focus:border-0 focus:shadow-none text-sm"
             onChange={handleSearchChange}
             value={searchValue}
           />
         </div>
       </div>
-      <div className="flex gap-3">
+
+      <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3">
         {saveButton && (
           <Button
             variant="none"
-            className="flex rounded-md bg-[#003087] text-white h-12 w-25 items-center justify-center cursor-pointer hover:bg-[#002f87a2]"
+            className="flex rounded-md bg-[#003087] text-white h-12 px-4 items-center justify-center cursor-pointer hover:bg-[#002f87a2] flex-1 sm:flex-none sm:min-w-[100px]"
             onClick={onSave}
             disabled={saveButtonDisabled}
           >
             <div className="flex gap-1 items-center justify-center">
-              <div className="text-lg">{saveButtonText}</div>
+              <div className="text-sm lg:text-base">{saveButtonText}</div>
             </div>
           </Button>
         )}
+
         {importButton && (
           <Button
             variant="default"
-            className="flex rounded-md bg-[#003087] text-white h-12 w-25 items-center justify-center cursor-pointer hover:bg-[#002f87a2]"
+            className="flex rounded-md bg-[#003087] text-white h-12 px-4 items-center justify-center cursor-pointer hover:bg-[#002f87a2] flex-1 sm:flex-none sm:min-w-[100px]"
           >
             <div className="flex gap-1 items-center justify-center">
-              <LuImport size={50} />
-              <div>Import</div>
+              <LuImport size={18} />
+              <div className="text-sm lg:text-base">Import</div>
             </div>
           </Button>
         )}
-        {addMembersButton && onMemberAdded && <AddMemberDialog onMemberAdded={onMemberAdded} />}
+
+        {addMembersButton && onMemberAdded && (
+          <div className="flex-1 sm:flex-none">
+            <AddMemberDialog onMemberAdded={onMemberAdded} />
+          </div>
+        )}
+
         {filterButton && (
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex justify-center border-1 border-gray-300 rounded-[8px] h-12 w-23 items-center cursor-pointer hover:bg-accent/80 transition duration-200 ease-in-out">
-                <FiFilter size={30} className="p-1 opacity-50" />
-                <div className="pr-1">
+              <div className="flex justify-center border border-gray-300 rounded-[8px] h-12 px-3 items-center cursor-pointer hover:bg-accent/80 transition duration-200 ease-in-out flex-1 sm:flex-none sm:min-w-[80px]">
+                <FiFilter size={20} className="opacity-50 flex-shrink-0" />
+                <div className="ml-1">
                   <h2 className="flex items-center justify-center font-[500] text-sm">Filter</h2>
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-fit mr-5">
+            <PopoverContent className="w-fit mr-2 sm:mr-5" align="end">
               <div className="grid gap-2">
                 <div className="space-y-1">
                   <h4 className="font-medium leading-none">Filters</h4>
                 </div>
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <div>
-                    <Label>Division</Label>
-                    <div className="grid grid-cols-2 gap-1 mt-1">
+                    <Label className="text-sm font-medium">Division</Label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 max-h-32 overflow-y-auto">
                       {divisions.map((division, index) => (
-                        <div key={`${division}-${index}`} className="flex items-center space-x-1">
+                        <div key={`${division}-${index}`} className="flex items-center space-x-2">
                           <Checkbox
                             id={`division-${division}-${index}`}
                             checked={selectedDivisions.includes(division)}
@@ -161,7 +169,7 @@ export function TableFilter({
                           />
                           <label
                             htmlFor={`division-${division}-${index}`}
-                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                           >
                             {division}
                           </label>
@@ -169,11 +177,12 @@ export function TableFilter({
                       ))}
                     </div>
                   </div>
+
                   <div>
-                    <Label>Year</Label>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <Label className="text-sm font-medium">Year</Label>
+                    <div className="flex flex-wrap gap-2 mt-2">
                       {years.map((year) => (
-                        <div key={year} className="flex items-center space-x-1">
+                        <div key={year} className="flex items-center space-x-2">
                           <Checkbox
                             id={`year-${year}`}
                             checked={selectedYears.includes(year)}
@@ -188,7 +197,7 @@ export function TableFilter({
                           />
                           <label
                             htmlFor={`year-${year}`}
-                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                           >
                             {year}
                           </label>
@@ -196,11 +205,12 @@ export function TableFilter({
                       ))}
                     </div>
                   </div>
+
                   <div>
-                    <Label>Status</Label>
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <Label className="text-sm font-medium">Status</Label>
+                    <div className="flex flex-wrap gap-2 mt-2">
                       {statuses.map((status) => (
-                        <div key={status} className="flex items-center space-x-1">
+                        <div key={status} className="flex items-center space-x-2">
                           <Checkbox
                             id={`status-${status}`}
                             checked={selectedStatuses.includes(status)}
@@ -215,7 +225,7 @@ export function TableFilter({
                           />
                           <label
                             htmlFor={`status-${status}`}
-                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer whitespace-nowrap"
                           >
                             {status}
                           </label>
@@ -224,11 +234,12 @@ export function TableFilter({
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between mt-2">
-                  <Button variant="outline" className="p-2" size="sm" onClick={handleFilterReset}>
+
+                <div className="flex flex-col sm:flex-row justify-between mt-4 gap-2">
+                  <Button variant="outline" className="p-2 text-sm" size="sm" onClick={handleFilterReset}>
                     Reset
                   </Button>
-                  <Button size="sm" className="bg-[#003087] text-white p-2" onClick={handleFilterApply}>
+                  <Button size="sm" className="bg-[#003087] text-white p-2 text-sm" onClick={handleFilterApply}>
                     Apply
                   </Button>
                 </div>

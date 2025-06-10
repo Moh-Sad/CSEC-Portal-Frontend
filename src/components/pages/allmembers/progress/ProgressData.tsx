@@ -122,8 +122,8 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
   }
 
   return (
-    <div className="w-auto my-5 mr-15">
-      <div className="flex flex-col w-80 items-center border-2 border-gray-300 rounded-md my-3 p-3">
+    <div className="w-full my-5 mr-15">
+      <div className="flex flex-col w-100 items-center border-2 border-gray-300 rounded-md my-3 p-3">
         <h3 className="flex justify-center text-lg font-semibold">
           Overall Attendance Progress
         </h3>
@@ -170,8 +170,8 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
         </div>
       </div>
 
-      <div className="flex w-auto border-2 border-gray-300 rounded-md">
-        <Card className="w-55">
+      <div className="flex border-2 border-gray-300 rounded-md w-full text">
+        <Card className="w-1/3">
           <CardContent className="p-6">
             <div className="flex items-center gap-8">
               <CircularProgress
@@ -182,10 +182,10 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
                 progressColor="#003087"
               />
               <div className="flex flex-col">
-                <span className="flex justify-center text-2xl font-medium">
+                <span className="flex justify-center text-3xl font-medium">
                   {metrics.Headsup}
                 </span>
-                <p className="mt-2 text-sm text-gray-500">Heads up</p>
+                <p className="mt-2 text-lg text-gray-500">Heads up</p>
               </div>
             </div>
           </CardContent>
@@ -193,7 +193,7 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
 
         <div className="border-1 border-gray-300 h-auto"></div>
 
-        <Card className="w-55">
+        <Card className="w-1/3">
           <CardContent className="flex p-6">
             <div className="flex items-center gap-8">
               <CircularProgress
@@ -204,10 +204,10 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
                 progressColor="#E2EAF2"
               />
               <div className="flex flex-col">
-                <span className="flex justify-center text-2xl font-medium">
+                <span className="flex justify-center text-3xl font-medium">
                   {metrics.Absent}
                 </span>
-                <p className="mt-2 text-sm text-gray-500">Absent</p>
+                <p className="mt-2 text-lg text-gray-500">Absent</p>
               </div>
             </div>
           </CardContent>
@@ -215,7 +215,7 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
 
         <div className="border-1 border-gray-300 h-auto"></div>
 
-        <Card className="w-55">
+        <Card className="w-1/3">
           <CardContent className="p-6">
             <div className="flex items-center gap-8">
               <CircularProgress
@@ -226,10 +226,10 @@ export default function AttendanceProgress({ id }: AttendanceProgressProps) {
                 progressColor="#E2EAF2"
               />
               <div className="flex flex-col">
-                <span className="flex justify-center text-2xl font-medium">
+                <span className="flex justify-center text-3xl font-medium">
                   {metrics.Present}
                 </span>
-                <p className="mt-2 text-sm text-gray-500">Present</p>
+                <p className="mt-2 text-lg text-gray-500">Present</p>
               </div>
             </div>
           </CardContent>

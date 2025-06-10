@@ -16,7 +16,7 @@ export function ProfileSidebar() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 w-50 border-2 border-gray-300 rounded-[8px] mr-5 mt-5">
+    <div className="flex flex-col items-center gap-2 w-55 border-2 border-gray-300 rounded-[8px] mr-5 mt-5">
       <Button
         onClick={() => router.push(getRouteWithId("/dashboard/allmembers/profile"))}
         className={cn(

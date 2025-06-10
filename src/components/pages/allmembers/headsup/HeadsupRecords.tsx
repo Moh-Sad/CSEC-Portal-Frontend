@@ -97,12 +97,12 @@ export default function HeadsUpContent() {
 
   if (headsUpData.length === 0) {
     return (
-      <div className="mt-6 space-y-4 max-w-2xl mr-12">
+      <div className="mt-6 space-y-4 w-full">
         <div className="p-4 shadow-sm">
           <div className="flex items-start gap-2">
             <div>
-              <h3 className="font-medium text-sm">No Heads-Up Notifications</h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <h3 className="font-medium text-lg">No Heads-Up Notifications</h3>
+              <p className="text-lg text-gray-600 mt-1">
                 User doesn't have any approved heads-up notifications at this time.
               </p>
             </div>
@@ -113,23 +113,23 @@ export default function HeadsUpContent() {
   }
 
   return (
-    <div className="mt-6 space-y-4 max-w-2xl mr-12">
+    <div className="mt-6 space-y-4 w-full mr-12">
       {headsUpData.map((item) => (
-        <div key={item.createdAt} className="p-4 border-l-4 border-l-blue-900 rounded-md shadow-sm">
+        <div key={item.createdAt} className="p-4 border-l-4 border-l-blue-900 rounded-md shadow-lg">
           <div className="flex items-start gap-2">
-            <svg className="h-5 w-5 text-blue-900 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg className="h-7 w-7 text-blue-900 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <h3 className="font-medium text-sm">
+              <h3 className="font-medium text-2xl">
                 {item.type 
                   ? `${item.type.charAt(0).toUpperCase() + item.type.slice(1)}`
                   : 'Heads-Up Notification'}
               </h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-lg text-gray-600 mt-1">
                 {item.reason || 'No reason provided'}
               </p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-sm text-gray-500 mt-2">
                 {new Date(item.createdAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'short',

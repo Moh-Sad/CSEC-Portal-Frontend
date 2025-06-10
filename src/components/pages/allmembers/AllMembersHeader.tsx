@@ -124,9 +124,9 @@ export function ProfileHeader() {
   };
 
   return (
-    <div className="flex justify-center relative h-54 rounded-[8px] w-full">
+    <div className="flex relative h-54 rounded-[8px] w-auto mr-5">
       <div
-        className="h-52 bg-[#001C5DCC] rounded-[8px] relative w-235"
+        className="h-52 bg-[#001C5DCC] rounded-[8px] relative w-full"
         style={{ padding: "12px" }}
       >
         <div 
@@ -137,16 +137,16 @@ export function ProfileHeader() {
             <span>{getInitials()}</span>
           )}
         </div>
-        <div className="relative z-10 h-full">
-          <div className="absolute bottom-6 left-13 transform translate-y-1/2 flex items-end gap-4">
-            <div className="flex items-center justify-center h-23 w-23 rounded-full bg-gray-200">
+        <div className="relative left-25 z-10 h-full w-full">
+          <div className="absolute bottom-7 left-13 transform translate-y-1/2 flex items-end gap-6">
+            <div className="flex items-center justify-center h-33 w-33 rounded-full bg-gray-200">
               {member.personal_info?.profile_picture ? (
                 <Image
                   src={member.personal_info.profile_picture}
                   alt={fullName}
                   width={92}
                   height={92}
-                  className="flex items-center justify-center h-23 w-23 rounded-full object-cover"
+                  className="flex items-center justify-center h-33 w-33 rounded-full object-cover"
                 />
               ) : (
                 <div className="flex items-center justify-center h-full w-full rounded-full text-2xl font-bold">
@@ -154,15 +154,15 @@ export function ProfileHeader() {
                 </div>
               )}
             </div>
-            <div className="flex gap-5 text-white" style={{ marginBottom: "22px" }}>
+            <div className="flex gap-20 text-white" style={{ marginBottom: "30px" }}>
               <div>
-                <h2 className="font-semibold text-2xl">{fullName}</h2>
-                <p className="text-[16px] opacity-90 capitalize">{member.personal_info?.specialization}</p>
+                <h2 className="font-semibold text-3xl">{fullName}</h2>
+                <p className="text-[20px] opacity-90 capitalize">{member.personal_info?.specialization}</p>
               </div>
               {lastSeen === "online" ? (
-                <p className="flex items-end text-sm text-green-400 font-medium">online</p>
+                <p className="flex items-end text-lg text-green-400 font-medium">online</p>
               ) : (
-                <p className="flex items-end text-sm opacity-90">last seen {lastSeen || "long time ago"}</p>
+                <p className="flex items-end text-lg opacity-90">last seen {lastSeen || "long time ago"}</p>
               )}
             </div>
           </div>
