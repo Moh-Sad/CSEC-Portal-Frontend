@@ -230,7 +230,7 @@ export function MembersTable({
                         className="h-8 w-8 hover:bg-transparent group"
                         onClick={(e) => handleDeleteClick(member, e)}
                       >
-                        <Trash2 className="h-4 w-4 group-hover:text-red-500" />
+                        <Trash2 className="h-4 w-4 group-hover:text-red-500 cursor-pointer" />
                       </Button>
                     )}
                   </div>
@@ -238,7 +238,7 @@ export function MembersTable({
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div>
                       <span className="text-gray-500">Division:</span>
-                      <Badge variant="outline" className="ml-1 text-xs">
+                      <Badge variant="outline" className="ml-1 text-[10px]">
                         {getMemberDivision(member._id)}
                       </Badge>
                     </div>

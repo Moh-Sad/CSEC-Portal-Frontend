@@ -88,7 +88,7 @@ export function TableFilter({
   }
 
   return (
-    <div className={cn("flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3", className)}>
+    <div className={cn("flex flex-col sm:flex-row justify-between items-end sm:items-center gap-3", className)}>
       <div className="flex justify-center gap-1 p-2 border border-gray-300 rounded-[8px] h-12 items-center focus-within:outline-blue-600 focus-within:border-blue-600 w-full sm:w-auto sm:min-w-[250px] lg:min-w-[300px]">
         <LuSearch size={20} className="flex-shrink-0" />
         <div className="flex-1">
@@ -137,7 +137,7 @@ export function TableFilter({
         {filterButton && (
           <Popover>
             <PopoverTrigger asChild>
-              <div className="flex justify-center border border-gray-300 rounded-[8px] h-12 px-3 items-center cursor-pointer hover:bg-accent/80 transition duration-200 ease-in-out flex-1 sm:flex-none sm:min-w-[80px]">
+              <div className="flex justify-center border border-gray-300 rounded-[8px] h-12 px-3 items-center cursor-pointer hover:bg-accent/80 transition duration-200 ease-in-out sm:flex-none sm:min-w-[80px] w-25">
                 <FiFilter size={20} className="opacity-50 flex-shrink-0" />
                 <div className="ml-1">
                   <h2 className="flex items-center justify-center font-[500] text-sm">Filter</h2>

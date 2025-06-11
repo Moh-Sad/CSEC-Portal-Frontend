@@ -241,7 +241,7 @@ export default function MembersPage() {
   }
 
   return (
-    <div className="flex flex-col h-fit w-full max-w-full mx-auto px-2 sm:px-4 lg:px-5 my-2 gap-4 rounded-[8px] border border-gray-300">
+    <div className="flex flex-col h-fit w-aufto max-w-full mx-auto px-2 sm:px-4 lg:px-5 my-2 gap-4 rounded-[8px] border border-gray-300 mr-3">
       <div className="flex-1 gap-3 flex flex-col p-2 sm:p-4 mt-2">
         <main className="flex-1 flex flex-col gap-4 sm:gap-6">
           <TableFilter
