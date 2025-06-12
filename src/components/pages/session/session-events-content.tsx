@@ -55,7 +55,7 @@ export default function SessionAndEvent() {
 
   const currentUserRole = Cookies.get("role");
   return (
-    <div className="container mx-auto max-w-full p-2 sm:p-4">
+    <div className="container mx-1 sm:mx-auto max-w-full p-2 sm:p-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-4">
         <div className="flex space-x-2 w-full sm:w-auto">
           <Button

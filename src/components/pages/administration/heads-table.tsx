@@ -216,22 +216,22 @@ export default function HeadsTable() {
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-w-120">
         <table className="w-full">
           <thead>
             <tr className="text-left text-gray-500 text-sm">
-              <th className="pb-2 font-normal">Member Name</th>
-              <th className="pb-2 font-normal">Division</th>
-              <th className="pb-2 font-normal">Role</th>
+              <th className="pb-2 font-normal w-auto md:w-120 overflow-x-hidden">Member Name</th>
+              <th className="pb-2 font-normal w-auto md:w-120 overflow-x-hidden">Division</th>
+              <th className="pb-2 font-normal w-auto md:w-120 overflow-x-hidden">Role</th>
               <th className="pb-2 font-normal">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-sm md:text-lg">
             {members.length > 0 ? (
               members.map((member) => (
                 <tr key={member._id} className="border-t border-gray-100">
                   <td className="py-3">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 w-auto">
                       <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200">
                         {member.userDetails?.personal_info?.profile_picture ? (
                           <Image
@@ -276,7 +276,7 @@ export default function HeadsTable() {
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && memberToDelete && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg w-full max-w-md p-6 space-y-4">
+          <div className="bg-white rounded-lg w-full max-w-md p-6 space-y-4 mx-3">
             <h2 className="text-xl font-semibold">Confirm Removal</h2>
             <p>
               Are you sure you want to remove{" "}

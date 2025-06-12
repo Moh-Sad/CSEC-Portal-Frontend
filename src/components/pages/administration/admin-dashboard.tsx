@@ -4,9 +4,7 @@ import { useState } from "react";
 import HeadsTable from "./heads-table";
 import RolesTable from "./roles-table";
 import RulesTable from "./rules-table";
-import MembersPage from "./memebers";
 import AddHeadModal from "../administration/add-head-model";
-import AddRoleModal from "./add-role-model";
 import { Button } from "@/components/ui/button";
 import {
   Filter,
@@ -148,7 +146,6 @@ export default function AdminDashboard() {
             <span className="hidden sm:inline">Back to Rules</span>
             <span className="sm:hidden">Back</span>
           </Button>
-          <MembersPage />
         </div>
       )}
 

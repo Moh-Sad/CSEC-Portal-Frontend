@@ -69,7 +69,7 @@ export default function Resources({
         <h3 className="text-lg font-medium">Resources</h3>
 
         {formData.resources.map((resource, index) => (
-          <div key={index} className="flex gap-4">
+          <div key={index} className="flex flex-col gap-4 md:flex-row ">
             <div className="flex-1">
               <div className="space-y-2">
                 <Label htmlFor={`resourceName-${index}`}>Resource Name</Label>

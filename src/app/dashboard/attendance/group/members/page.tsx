@@ -196,7 +196,7 @@ export default function TableUsage() {
   };
 
   return (
-    <div className="flex flex-col h-140 min-w-240 max-w-full mr-5 my-3 gap-4 rounded-[8px] border-1 border-gray-300">
+    <div className="flex flex-col h-auto max-w-full sm:mr-4 mx-2 my-3  gap-4 rounded-[8px] border-1 border-gray-300">
       {/* Toast Notification */}
       {toast.show && (
         <div
@@ -212,7 +212,7 @@ export default function TableUsage() {
 
       <div className="flex">
         {/* Main Content */}
-        <div className="flex-1 gap-3 flex flex-col p-2 m-3">
+        <div className="flex-1 gap-3 flex flex-col p-2 m-3 h-full">
           {/* Main Content Area */}
           <main className="flex-1 flex flex-col gap-6">
             {/* Table Filter with Save Button */}
@@ -229,10 +229,10 @@ export default function TableUsage() {
             />
             <div>
               {/* Attendance Table */}
-              <div className="flex flex-col min-h-98">
-                <div className="grid grid-cols-3 gap-4 border-b py-3 text-sm font-medium justify-end text-gray-500">
+              <div className="flex flex-col min-h-100 md:min-h-150">
+                <div className="h-full hidden sm:flex sm:justify-between gap-4 border-b py-1 text-sm font-medium justify-end text-gray-500">
                   <div>Member Name</div>
-                  <div className="flex justify-end pr-10">Attendance</div>
+                  <div className="flex justify-center pl-8">Attendance</div>
                   <div className="flex justify-end pr-15">Excused</div>
                 </div>
                 <AttendanceTable

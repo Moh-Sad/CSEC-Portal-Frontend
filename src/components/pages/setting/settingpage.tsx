@@ -92,9 +92,9 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
+    <div className={`flex flex-col mx-auto md:mx-3 min-h-screen items-start ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
       {/* Settings content */}
-      <div className="p-4 mx-auto w-full max-w-2xl flex-1 overflow-auto">
+      <div className="p-4 mx-auto w-full flex-1 overflow-auto">
         <div className="w-full">
           {/* Appearance Setting with Theme button */}
           <div className={`py-4 border-b ${theme === 'dark' ? 'border-gray-700' : ''} flex justify-between items-center`}>

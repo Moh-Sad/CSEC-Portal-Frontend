@@ -163,7 +163,7 @@ export default function AddHeadModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg w-full max-w-md p-6 space-y-6">
+      <div className="bg-white rounded-lg w-full max-w-md p-6 space-y-6 mx-3">
         <h2 className="text-xl font-semibold">Add New Head</h2>
 
         <div className="space-y-4">

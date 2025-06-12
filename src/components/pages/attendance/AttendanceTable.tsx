@@ -109,16 +109,16 @@ export default function AttendanceTable({
         const { fullName, profilePicture, initials } = getMemberDisplayInfo(member);
 
         return (
-          <div key={member._id} className="grid grid-cols-1 xs:grid-cols-3 gap-2 sm:gap-4 py-3 sm:py-4 text-xs sm:text-sm">
+          <div key={member._id} className="sm:flex sm:justify-between grid grid-cols-1 gap-2 sm:gap-4 py-3 sm:py-4 text-xs sm:text-sm">
             <div className="flex items-center gap-2 sm:gap-3 col-span-1 xs:col-span-1">
-              <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
+              <Avatar className="h-10 w-10 rounded-full">
                 <AvatarImage
                   src={profilePicture || "/placeholder.svg"}
                   alt={fullName}
                 />
                 <AvatarFallback className="text-xs sm:text-sm">{initials}</AvatarFallback>
               </Avatar>
-              <span className="truncate">{fullName}</span>
+              <span className="text-sm truncate">{fullName}</span>
             </div>
             <div className="flex items-center justify-start xs:justify-end gap-2 sm:gap-4 col-span-1 xs:col-span-1">
               <button

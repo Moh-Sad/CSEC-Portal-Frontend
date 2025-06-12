@@ -106,7 +106,7 @@ export function TableFilter({
         {saveButton && (
           <Button
             variant="none"
-            className="flex rounded-md bg-[#003087] text-white h-12 px-4 items-center justify-center cursor-pointer hover:bg-[#002f87a2] flex-1 sm:flex-none sm:min-w-[100px]"
+            className="flex rounded-md bg-[#003087] text-white h-12 px-4 items-center justify-center cursor-pointer hover:bg-[#002f87a2] flex-1 sm:flex-none sm:min-w-[100px] w-25"
             onClick={onSave}
             disabled={saveButtonDisabled}
           >
