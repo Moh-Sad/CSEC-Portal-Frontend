@@ -20,7 +20,7 @@ export function ProfileSidebar() {
       <Button
         onClick={() => router.push(getRouteWithId("/dashboard/allmembers/profile"))}
         className={cn(
-          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-l-[8px] md:rounded-t-[8px] md:rounded-b-none",
+          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-l-[8px] md:rounded-t-[8px] md:rounded-b-none cursor-pointer",
           pathname === "/dashboard/allmembers/profile" ? "bg-[#003081] text-white" : "bg-none"
         )}
         style={{ padding: "15px" }}
@@ -32,7 +32,7 @@ export function ProfileSidebar() {
       <Button
         onClick={() => router.push(getRouteWithId("/dashboard/allmembers/attendance"))}
         className={cn(
-          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-none",
+          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-none cursor-pointer",
           pathname === "/dashboard/allmembers/attendance" ? "bg-[#003081] text-white" : "bg-none"
         )}
         style={{ padding: "15px" }}
@@ -44,7 +44,7 @@ export function ProfileSidebar() {
       <Button
         onClick={() => router.push(getRouteWithId("/dashboard/allmembers/progress"))}
         className={cn(
-          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-none",
+          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-none cursor-pointer",
           pathname === "/dashboard/allmembers/progress" ? "bg-[#003081] text-white" : "bg-none"
         )}
         style={{ padding: "15px" }}
@@ -56,7 +56,7 @@ export function ProfileSidebar() {
       <Button
         onClick={() => router.push(getRouteWithId("/dashboard/allmembers/headsup"))}
         className={cn(
-          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-r-[8px] md:rounded-b-[8px] md:rounded-t-none",
+          "h-10 min-w-fit w-20 md:w-full justify-center md:justify-start rounded-r-[8px] md:rounded-b-[8px] md:rounded-t-none cursor-pointer",
           pathname === "/dashboard/allmembers/headsup" ? "bg-[#003081] text-white" : "bg-none"
         )}
         style={{ padding: "15px" }}
