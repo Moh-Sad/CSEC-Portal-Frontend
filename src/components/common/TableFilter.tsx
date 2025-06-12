@@ -88,7 +88,7 @@ export function TableFilter({
   }
 
   return (
-    <div className={cn("flex flex-col sm:flex-row justify-between items-end sm:items-center gap-3", className)}>
+    <div className={cn("flex flex-col sm:flex-row justify-between items-center sm:items-center gap-3", className)}>
       <div className="flex justify-center gap-1 p-2 border border-gray-300 rounded-[8px] h-12 items-center focus-within:outline-blue-600 focus-within:border-blue-600 w-full sm:w-auto sm:min-w-[250px] lg:min-w-[300px]">
         <LuSearch size={20} className="flex-shrink-0" />
         <div className="flex-1">
@@ -102,7 +102,7 @@ export function TableFilter({
         </div>
       </div>
 
-      <div className="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3">
+      <div className="flex flex-wrap sm:flex-nowrap justify-between gap-10 sm:gap-3">
         {saveButton && (
           <Button
             variant="none"

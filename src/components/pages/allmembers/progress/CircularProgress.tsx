@@ -27,7 +27,14 @@ export default function CircularProgress({
     <div className={cn("relative", className)} style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="transform -rotate-90">
         {/* Background circle */}
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={color} strokeWidth={strokeWidth} />
+        <circle 
+          cx={size / 2} 
+          cy={size / 2} 
+          r={radius} 
+          fill="none" 
+          stroke={color} 
+          strokeWidth={strokeWidth} 
+        />
         {/* Progress circle */}
         <circle
           cx={size / 2}
