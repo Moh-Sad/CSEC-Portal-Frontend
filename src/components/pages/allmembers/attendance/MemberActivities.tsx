@@ -31,8 +31,8 @@ interface HeadsUpData {
 
 export function MemberActivities() {
   return (
-    <div className="flex rounded-lg border-1 border-gray-300 w-full my-5 mr-3">
-      <div className="min-w-175 w-full">
+    <div className="flex rounded-lg border-1 border-gray-300 w-full my-3 md:my-5 md:mr-3 overflow-x-auto">
+      <div className="min-w-full md:min-w-175 w-full">
         <ActivityTable />
       </div>
     </div>
@@ -116,17 +116,16 @@ function ActivityTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-gray-500">Date</TableHead>
-            <TableHead className="text-gray-500">Session</TableHead>
-            <TableHead className="text-gray-500">Start-Time</TableHead>
-            <TableHead className="text-gray-500">End-Time</TableHead>
-            <TableHead className="text-gray-500">Status</TableHead>
-            <TableHead className="text-gray-500">Source</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Date</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Session</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Start</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">End</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell colSpan={6} className="text-center py-4">
+            <TableCell colSpan={5} className="text-center py-4 text-sm">
               Loading data...
             </TableCell>
           </TableRow>
@@ -140,17 +139,16 @@ function ActivityTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-gray-500">Date</TableHead>
-            <TableHead className="text-gray-500">Session</TableHead>
-            <TableHead className="text-gray-500">Start-Time</TableHead>
-            <TableHead className="text-gray-500">End-Time</TableHead>
-            <TableHead className="text-gray-500">Status</TableHead>
-            <TableHead className="text-gray-500">Source</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Date</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Session</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Start</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">End</TableHead>
+            <TableHead className="text-gray-500 text-xs md:text-sm">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell colSpan={6} className="text-center py-4">
+            <TableCell colSpan={5} className="text-center py-4 text-sm">
               No records found
             </TableCell>
           </TableRow>
@@ -163,11 +161,11 @@ function ActivityTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="text-gray-500">Date</TableHead>
-          <TableHead className="text-gray-500">Session</TableHead>
-          <TableHead className="text-gray-500">Start-Time</TableHead>
-          <TableHead className="text-gray-500">End-Time</TableHead>
-          <TableHead className="text-gray-500">Status</TableHead>
+          <TableHead className="text-gray-500 text-xs md:text-sm">Date</TableHead>
+          <TableHead className="text-gray-500 text-xs md:text-sm">Session</TableHead>
+          <TableHead className="text-gray-500 text-xs md:text-sm">Start</TableHead>
+          <TableHead className="text-gray-500 text-xs md:text-sm">End</TableHead>
+          <TableHead className="text-gray-500 text-xs md:text-sm">Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -180,11 +178,11 @@ function ActivityTable() {
 
           return (
             <TableRow key={record._id}>
-              <TableCell>{formattedDate || ''}</TableCell>
-              <TableCell>Session</TableCell>
-              <TableCell>{formattedTime || ''}</TableCell>
-              <TableCell>{formattedEndTime || ''}</TableCell>
-              <TableCell>
+              <TableCell className="text-xs md:text-sm">{formattedDate || ''}</TableCell>
+              <TableCell className="text-xs md:text-sm">Session</TableCell>
+              <TableCell className="text-xs md:text-sm">{formattedTime || ''}</TableCell>
+              <TableCell className="text-xs md:text-sm">{formattedEndTime || ''}</TableCell>
+              <TableCell className="text-xs md:text-sm">
                 <span
                   className={cn(
                     "rounded px-2 py-1 text-xs font-medium",

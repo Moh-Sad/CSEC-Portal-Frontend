@@ -124,7 +124,7 @@ export function ProfileHeader() {
   };
 
   return (
-    <div className="flex relative h-auto md:h-54 rounded-[8px] w-auto md:mr-5 mt-2 md:mt-0">
+    <div className="flex relative h-auto md:h-54 rounded-[8px] w-auto md:mr-5 mt-2 md:mt-0 mx-2 md:mx-0">
       <div
         className="h-auto md:h-52 bg-[#001C5DCC] rounded-[8px] relative w-full"
         style={{ padding: "12px" }}

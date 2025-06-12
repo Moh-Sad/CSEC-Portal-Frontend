@@ -2,7 +2,7 @@ import { MemberActivities } from "@/components/pages/allmembers/attendance/Membe
 
 export default function page() {
   return (
-    <div className="w-334 h-full">
+    <div className="w-full md:w-334 h-full px-2 md:px-0">
       <MemberActivities />
     </div>
   )
