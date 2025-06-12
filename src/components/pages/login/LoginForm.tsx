@@ -48,24 +48,23 @@ export function LoginForm() {
   const remember = watch("rememberMe");
 
   const onSubmit = async (data: FormData) => {
-    setLoginError(null);
-    setIsLoading(true);
+  setLoginError(null);
+  setIsLoading(true);
 
-    try {
-      const result = await handleLogin(data);
+  try {
+    const result = await handleLogin(data);
 
-      if (result.success) {
-        router.push("/dashboard");
-        router.refresh();
-      } else {
-        setLoginError(result.error || "Login failed");
-      }
-    } catch (error) {
-      setLoginError("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
+    if (result.success) {
+      window.location.href = '/dashboard';
+    } else {
+      setLoginError(result.error || "Login failed");
     }
-  };
+  } catch (error) {
+    setLoginError("An unexpected error occurred");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="relative flex flex-col mx-auto w-full max-w-md space-y-6 p-6">

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const PUBLIC_ROUTES = ['/', '/login', '/_next', '/favicon.ico'];
+const PROTECTED_ROUTES = ['/dashboard']; 
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -11,6 +12,15 @@ export async function middleware(request: NextRequest) {
   }
 
   const accessToken = request.cookies.get('accessToken')?.value;
+
+  if (PROTECTED_ROUTES.some(route => path.startsWith(route))) {
+    if (accessToken) {
+      return NextResponse.next();
+    }
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('redirect', path);
+    return NextResponse.redirect(loginUrl);
+  }
 
   if (!accessToken) {
     const loginUrl = new URL('/login', request.url);

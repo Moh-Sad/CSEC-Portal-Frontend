@@ -2,19 +2,23 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { loading, isAuthenticated } = useAuth();
   const router = useRouter();
+  const [initialCheckDone, setInitialCheckDone] = useState(false);
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push('/login');
+    if (!loading) {
+      if (!isAuthenticated) {
+        router.push('/login');
+      }
+      setInitialCheckDone(true);
     }
   }, [loading, isAuthenticated, router]);
 
-  if (loading) {
+  if (loading || !initialCheckDone) {
     return (
       <div className="fixed inset-0 bg-gradient-to-br from-[#003081] to-[#001a3d] flex flex-col items-center justify-center p-4">
         <div className="max-w-md w-full space-y-6 text-center">
