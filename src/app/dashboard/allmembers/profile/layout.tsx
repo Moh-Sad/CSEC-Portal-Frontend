@@ -7,13 +7,13 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="flex flex-col w-full h-full gap-5 ml-2">
+      <div className="flex flex-col w-full h-full gap-5 md:ml-2">
         <ProfileHeader />
-        <div className="flex w-full">
-          <div>
+        <div className="flex flex-col md:flex-row w-full">
+          <div className="md:w-auto">
             <ProfileSidebar />
           </div>
-          <div>
+          <div className="w-full">
             {children}
           </div>
         </div>

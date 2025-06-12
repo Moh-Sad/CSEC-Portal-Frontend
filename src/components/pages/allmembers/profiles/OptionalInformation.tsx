@@ -71,7 +71,7 @@ export function OptionalInformation() {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-8" style={{ marginTop: "10px" }}>
+      <div className="flex flex-col md:flex-row md:gap-8" style={{ marginTop: "10px" }}>
         {/* Left Column */}
         <div className="flex-1 flex flex-col gap-4">
           <div className="flex flex-col gap-1 my-5">
@@ -133,7 +133,7 @@ export function OptionalInformation() {
         </div>
 
         {/* Right Column */}
-        <div className="flex-1 min-w-[250px] flex flex-col gap-4">
+        <div className="flex-1 min-w-0 md:min-w-[250px] flex flex-col gap-4 mt-4 md:mt-0">
           <div className="flex flex-col gap-1 my-5">
             <span className="text-sm font-medium text-gray-500">
               Instagram Handle

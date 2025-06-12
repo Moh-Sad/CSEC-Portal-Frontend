@@ -94,12 +94,6 @@ export function Resources() {
   if (error) {
     return (
       <div className="flex flex-col my-8">
-        <div className="flex space-y-2">
-          <span className="w-86 text-sm font-medium text-gray-500">
-            Resource Name
-          </span>
-          <span className="text-sm font-medium text-gray-500">Link</span>
-        </div>
         <div className="flex justify-center items-center h-32 text-gray-500">
           {error}
         </div>
@@ -110,12 +104,6 @@ export function Resources() {
   if (resources.length === 0) {
     return (
       <div className="flex flex-col my-8">
-        <div className="flex space-y-2">
-          <span className="w-86 text-sm font-medium text-gray-500">
-            Resource Name
-          </span>
-          <span className="text-sm font-medium text-gray-500">Link</span>
-        </div>
         <div className="flex justify-center items-center h-32 text-gray-500">
           No resources available
         </div>
@@ -124,23 +112,25 @@ export function Resources() {
   }
 
   return (
-    <div className="flex flex-col my-8">
-      <div className="flex space-y-2">
-        <span className="w-115 text-sm font-medium text-gray-500">
+    <div className="flex flex-col gap-2 my-4 md:my-8 w-auto mx-4 md:mx-0">
+      <div className="flex flex-row justify-between md:justify-start md:space-y-2">
+        <span className="md:w-115 text-sm font-medium text-gray-500">
           Resource Name
         </span>
         <span className="text-sm font-medium text-gray-500">Link</span>
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 md:gap-8">
         {resources.map((resource) => (
-          <div key={resource._id} className="flex gap-20">
-            <span className="font-medium w-95">{resource.name}</span>
-            <span className="font-medium w-100 overflow-x-hidden">
-              {resource.link}
-            </span>
-            <a href={resource.link} target="_blank" rel="noopener noreferrer" className="hover:text-[#003087] hover:transform hover:scale-110 transition-transform duration-200">
-              <LuExternalLink />
-            </a>
+          <div key={resource._id} className="flex flex-row justify-between md:justify-start gap-2 md:gap-20">
+            <span className="font-medium w-full md:w-95">{resource.name}</span>
+            <div className="flex items-center gap-20">
+              <span className="hidden md:block font-medium w-full md:w-100 overflow-x-auto md:overflow-x-hidden">
+                {resource.link}
+              </span>
+              <a href={resource.link} target="_blank" rel="noopener noreferrer" className="hover:text-[#003087] hover:transform hover:scale-110 transition-transform duration-200">
+                <LuExternalLink />
+              </a>
+            </div>
           </div>
         ))}
       </div>

@@ -77,10 +77,10 @@ export function RequiredInformation() {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-8" style={{ marginTop: "10px" }}>
+      <div className="flex flex-col sm:flex-row md:gap-8" style={{ marginTop: "10px" }}>
         {/* Left Column */}
         <div className="flex-1 flex flex-col gap-4">
-          <div className="flex flex-col gap-1 my-5">
+          <div className="flex flex-col gap-1 my-3 md:my-5">
             <span className="text-sm font-medium text-gray-500">
               First Name
             </span>
@@ -90,7 +90,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Mobile Number
             </span>
@@ -100,7 +100,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Date of Birth
             </span>
@@ -112,7 +112,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">Gender</span>
             <span className="text-gray-800 font-medium">
               {member.personal_info?.gender
@@ -123,7 +123,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Expected Graduation Year
             </span>
@@ -133,7 +133,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1 pb-5">
+          <div className="flex flex-col gap-1 pb-3 md:pb-5">
             <span className="text-sm font-medium text-gray-500">
               Department
             </span>
@@ -144,8 +144,8 @@ export function RequiredInformation() {
         </div>
 
         {/* Right Column */}
-        <div className="flex-1 flex flex-col gap-4">
-          <div className="flex flex-col gap-1 my-5">
+        <div className="flex-1 flex flex-col gap-4 mt-4 md:mt-0">
+          <div className="flex flex-col gap-1 my-3 md:my-5">
             <span className="text-sm font-medium text-gray-500">Last Name</span>
             <span className="text-gray-800 font-medium">
               {member.personal_info?.last_name || "N/A"}
@@ -153,7 +153,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Email Address
             </span>
@@ -161,12 +161,12 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">Github</span>
             {member.personal_info?.github_handle ? (
               <a
                 href={`https://github.com/${member.personal_info.github_handle}`}
-                className="text-blue-600 hover:underline font-medium"
+                className="text-blue-600 hover:underline font-medium break-all"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -178,7 +178,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Telegram Handle
             </span>
@@ -188,7 +188,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1" style={{ marginBottom: "20px" }}>
+          <div className="flex flex-col gap-1" style={{ marginBottom: "15px" }}>
             <span className="text-sm font-medium text-gray-500">
               Specialization
             </span>
@@ -198,7 +198,7 @@ export function RequiredInformation() {
             <div className="w-full border-b border-gray-300"></div>
           </div>
 
-          <div className="flex flex-col gap-1 pb-5">
+          <div className="flex flex-col gap-1 pb-3 md:pb-5">
             <span className="text-sm font-medium text-gray-500">
               University ID
             </span>

@@ -18,17 +18,17 @@ export function ProfileTabs() {
           className="w-full py-2"
         >
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="required" className="flex items-start gap-2 w-full">
-              <FileText className="h-5 w-5 my-2"/>
-              <span className="p-1">Required Information</span>
+            <TabsTrigger value="required" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 w-full p-1 md:p-2">
+              <FileText className="h-4 w-4 md:h-5 md:w-5"/>
+              <span className="text-xs md:text-base">Required</span>
             </TabsTrigger>
-            <TabsTrigger value="optional" className="flex items-start gap-2 w-full">
-              <User className="h-5 w-5 my-2"/>
-              <span className="p-1">Optional Information</span>
+            <TabsTrigger value="optional" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 w-full p-1 md:p-2">
+              <User className="h-4 w-4 md:h-5 md:w-5"/>
+              <span className="text-xs md:text-base">Optional</span>
             </TabsTrigger>
-            <TabsTrigger value="resources" className="flex items-start gap-2 w-full">
-              <BookOpen className="h-5 w-5 my-2"/>
-              <span className="p-1">Resources</span>
+            <TabsTrigger value="resources" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 w-full p-1 md:p-2">
+              <BookOpen className="h-4 w-4 md:h-5 md:w-5"/>
+              <span className="text-xs md:text-base">Resources</span>
             </TabsTrigger>
           </TabsList>
           <TabsContent value="required">
